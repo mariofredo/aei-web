@@ -1,14 +1,15 @@
+@import url('../fonts/stylesheet.css');
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --background: #0a0a0a;
+//     --foreground: #ededed;
+//   }
+// }
 
 html,
 body {
@@ -19,15 +20,18 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  outline: 0;
 }
 
 a {
@@ -35,8 +39,50 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
 }
+input{
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #E4E4E4;
+  height: 36px;
+  display: block;
+  background: #fff;
+  color: #332C2B;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+::placeholder{
+  color: #C9C9C9;
+  opacity: 1;
+}
+.green_btn{
+  width: 100%;
+  background: #19A748;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  height: 44px;
+  display: block;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+section{
+  padding-top: 90px;
+  min-height: calc(100vh - 100px);
+}
+
+// @media (prefers-color-scheme: dark) {
+//   html {
+//     color-scheme: dark;
+//   }
+// }

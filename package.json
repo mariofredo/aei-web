@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "js-cookie": "^3.0.5",
     "next": "14.2.18",
     "next-intl": "^3.25.3",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.81.0"
+    "react-slick": "^0.30.2",
+    "sass": "^1.81.0",
+    "slick-carousel": "^1.8.1"
   }
 }
