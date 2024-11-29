@@ -45,7 +45,9 @@ a {
   margin: 0 auto;
   position: relative;
 }
-input{
+input,
+select,
+textarea{
   width: 100%;
   border: none;
   border-bottom: 1px solid #E4E4E4;
@@ -57,11 +59,16 @@ input{
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
 }
+textarea{
+  height: 100px;
+  resize: none;
+}
 ::placeholder{
   color: #C9C9C9;
   opacity: 1;
 }
-.green_btn{
+.green_btn,
+.grey_btn{
   width: 100%;
   background: #19A748;
   color: #fff;
@@ -75,6 +82,10 @@ input{
   font-weight: 500;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
+}
+.grey_btn{
+  background: #E4E4E4;
+  color: #332C2B;
 }
 section{
   padding-top: 90px;

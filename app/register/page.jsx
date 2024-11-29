@@ -13,7 +13,17 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
     const [showPopup, setShowPopup] = useState(false); // Untuk popup
     const [resendDisabled, setResendDisabled] = useState(true); // Menonaktifkan tombol resend awalnya
+    const [showPassword, setShowPassword] = useState(false); // State untuk mengontrol visibility password
+    const [showConfirmPassword, setShowConfirmPassword] = useState(""); // State untuk confirm password
     const [timer, setTimer] = useState(30); // Timer untuk countdown
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => !prevState); // Toggle visibility
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword((prevState) => !prevState); // Toggle visibility
+    };
 
     const handleRegister = async () => {
         if (!email || !password || !confirmPassword) {
@@ -140,21 +150,21 @@ export default function Register() {
                         </div>
                         <div className="form_box">
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                            <div className="show_pass"></div>
+                            <div className={`show_pass ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}></div>
                         </div>
                         <div className="form_box">
                             <input
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
                                 placeholder="Confirmation Password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
-                            <div className="show_pass"></div>
+                            <div className={`show_pass ${showConfirmPassword ? "active" : ""}`} onClick={toggleConfirmPasswordVisibility}></div>
                         </div>
                         <div className="form_box">
                             <div className="remember_box agreement">

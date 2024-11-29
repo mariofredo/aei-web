@@ -9,6 +9,11 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State untuk mengontrol visibility password
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => !prevState); // Toggle visibility
+    };
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -91,12 +96,12 @@ export default function Login() {
                         </div>
                         <div className="form_box">
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"} // Ubah tipe berdasarkan state
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                            <div className="show_pass"></div>
+                            <div className={`show_pass ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}></div>
                         </div>
                         <div className="form_box">
                             <div className="remember_box">
