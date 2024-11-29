@@ -235,73 +235,74 @@ export default function CompleteProfile(){
                         {step === 1 && (
                             <div className="step">
                                 <div className="form_box">
+                                    <span className="title">Company Email<i>*</i></span>
                                     <input
                                         type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        placeholder="Company Email*"
                                         required
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Company Phone<i>*</i></span>
                                     <input
                                         type="tel"
                                         name="officePhone"
                                         value={formData.officePhone}
                                         onChange={handleChange}
-                                        placeholder="Company Phone*"
                                         required
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Company Name<i>*</i></span>
                                     <input
                                         type="text"
                                         name="companyName"
                                         value={formData.companyName}
                                         onChange={handleChange}
-                                        placeholder="Company Name*"
                                         required
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Company Website<i>*</i></span>
                                     <input
                                         type="text"
                                         name="website"
                                         value={formData.website}
                                         onChange={handleChange}
-                                        placeholder="Company Website*"
                                         required
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Stock Code<i>*</i></span>
                                     <input
                                         type="text"
                                         name="stockCode"
                                         value={formData.stockCode}
                                         onChange={handleChange}
-                                        placeholder="Stock Code*"
                                         required
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Listing Date<i>*</i></span>
                                     <input
                                         type="date"
                                         name="ipoAdmissionDate"
                                         value={formData.ipoAdmissionDate}
                                         onChange={handleChange}
-                                        placeholder="Listing Date"
                                         required
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Toal Asset<i>*</i></span>
                                     <select
-                                        name="ass"
+                                        name="asset"
                                         value={formData.asset}
                                         onChange={handleChange}
                                         required
                                     >
-                                        <option value="">Select Asset</option>
+                                        <option value="" disabled>Select Asset</option>
                                         {assets.map((asset) => (
                                             <option key={asset.id} value={asset.id}>
                                                 {asset.name}
@@ -345,6 +346,7 @@ export default function CompleteProfile(){
                                                 </div>
                                             </div>
                                             <div className="form_box">
+                                                <span className="title">Full Name<i>*</i></span>
                                                 <input
                                                     type="text"
                                                     name={`directors-${index}-name`}
@@ -354,6 +356,7 @@ export default function CompleteProfile(){
                                                 />
                                             </div>
                                             <div className="form_box">
+                                                <span className="title">Position<i>*</i></span>
                                                 <select
                                                     name={`directors-${index}-position`}
                                                     value={leader.position}
@@ -389,40 +392,41 @@ export default function CompleteProfile(){
                         {step === 3 && (
                             <div className="step">
                                 <div className="form_box">
+                                    <span className="title">Headquarter Address<i>*</i></span>
                                     <input
                                         type="text"
                                         name="headquarterAddress"
                                         value={formData.headquarterAddress}
                                         onChange={handleChange}
-                                        placeholder="Headquarter Address"
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Management Office Address<i>*</i></span>
                                     <input
                                         type="text"
                                         name="managementOfficeAddress"
                                         value={formData.managementOfficeAddress}
                                         onChange={handleChange}
-                                        placeholder="Management Office Address"
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">About Company<i>*</i></span>
                                     <textarea
                                         type="text"
                                         name="about"
                                         value={formData.about}
                                         onChange={handleChange}
-                                        placeholder="Industry Category"
                                     />
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Industry Classification<i>*</i></span>
                                     <select
                                         name="industryClassification"
                                         value={formData.industryClassification}
                                         onChange={handleChange}
                                         required
                                     >
-                                        <option value="">Select Asset</option>
+                                        <option value="" disabled>Select Industry</option>
                                         {industryClassification.map((industryClass) => (
                                             <option key={industryClass.id} value={industryClass.id}>
                                                 {industryClass.name}
@@ -431,12 +435,12 @@ export default function CompleteProfile(){
                                     </select>
                                 </div>
                                 <div className="form_box">
+                                    <span className="title">Sub Sector<i>*</i></span>
                                     <input
                                         type="text"
                                         name="subSector"
                                         value={formData.subSector}
                                         onChange={handleChange}
-                                        placeholder="Industry Category"
                                     />
                                 </div>
                                 
@@ -449,6 +453,7 @@ export default function CompleteProfile(){
                                         <div key={index} className="leaders_box">
                                             <h5>Person in charge {index + 1}</h5>
                                             <div className="form_box">
+                                                <span className="title">PIC Name<i>*</i></span>
                                                 <input
                                                     type="text"
                                                     name={`pics-${index}-name`}
@@ -458,6 +463,7 @@ export default function CompleteProfile(){
                                                 />
                                             </div>
                                             <div className="form_box">
+                                                <span className="title">Position<i>*</i></span>
                                                 <select
                                                     name={`pics-${index}-position`}
                                                     value={pic.position}
@@ -475,21 +481,21 @@ export default function CompleteProfile(){
                                                 </select>
                                             </div>
                                             <div className="form_box">
+                                                <span className="title">PIC Mobile Number or Whatsapp<i>*</i></span>
                                                 <input
                                                     type="tel"
                                                     name={`pics-${index}-phone`}
                                                     value={pic.phone}
                                                     onChange={handleChange}
-                                                    placeholder="Your Name"
                                                 />
                                             </div>
                                             <div className="form_box">
+                                                <span className="title">PIC Email<i>*</i></span>
                                                 <input
                                                     type="email"
                                                     name={`pics-${index}-email`}
                                                     value={pic.email}
                                                     onChange={handleChange}
-                                                    placeholder="Your Name"
                                                 />
                                             </div>
                                             {formData.pics.length > 1 && (
@@ -510,10 +516,10 @@ export default function CompleteProfile(){
                         )}
                     </div>
 
-                    <div className="buttons">
-                        {step > 1 && <button onClick={handleBack}>Back</button>}
-                        {step < 4 && <button onClick={handleNext}>Next</button>}
-                        {step === 4 && <button onClick={handleSubmit}>Submit</button>}
+                    <div className="button_wrapper">
+                        {step > 1 && <button className='grey_btn' onClick={handleBack}>Back</button>}
+                        {step < 4 && <button className='green_btn' onClick={handleNext}>Next</button>}
+                        {step === 4 && <button className='green_btn' onClick={handleSubmit}>Submit</button>}
                     </div>
                 </div>
             </div>

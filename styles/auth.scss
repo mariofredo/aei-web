@@ -43,6 +43,20 @@
             margin-bottom: 20px;
             position: relative;
         }
+        .show_pass{
+            width: 24px;
+            height: 24px;
+            display: block;
+            background: url('../public/images/icon_eye.png') no-repeat center / contain;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            text-indent: -9999px;
+            &.active{
+                background: url('../public/images/icon_eye_close.png') no-repeat center / contain;
+            }
+        }
         .remember_box{
             width: 50%;
             display: flex;
