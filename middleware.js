@@ -1,23 +1,24 @@
 import { NextResponse } from 'next/server';
 
-// Middleware untuk mengarahkan pengguna yang belum login ke halaman login
+// Middleware to handle authentication-based routing
 export function middleware(req) {
-    const token = req.cookies.get('token'); // Ambil token dari cookie
+    const token = req.cookies.get('token'); // Retrieve token from cookies
+    const { pathname } = req.nextUrl; // Extract pathname from the request
 
-    // Jika token tidak ada dan user mencoba mengakses halaman dashboard, redirect ke login
-    if (!token && req.nextUrl.pathname.startsWith('/')) {
+    // Redirect unauthenticated users trying to access protected routes
+    if (!token && pathname === '/') {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
-    // Jika token ada dan user mencoba mengakses halaman login/register, redirect ke dashboard
-    if (token && ['/login', '/register'].includes(req.nextUrl.pathname)) {
+    // Redirect authenticated users away from login/register pages
+    if (token && ['/login', '/register'].includes(pathname)) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
-    return NextResponse.next(); // Lanjutkan ke halaman yang diminta
+    return NextResponse.next(); // Proceed to the requested page
 }
 
-// Konfigurasi matcher untuk halaman yang perlu middleware
+// Configure matcher for applying middleware to specific routes
 export const config = {
-    matcher: ['/', '/login', '/register'], // Tentukan halaman-halaman yang menggunakan middleware
+    matcher: ['/', '/login', '/register'], // Apply middleware only to these routes
 };
