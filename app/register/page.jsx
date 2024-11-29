@@ -87,7 +87,7 @@ export default function Register() {
     
         try {
             // Send the API request to resend the OTP
-            const response = await fetch("https://aei-api.superfk.co/auth/email-verify", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/email-verify`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

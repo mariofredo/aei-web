@@ -1,9 +1,9 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import Cookies from 'js-cookie';
 
-export default function VerifyEmail() {
+function VerifyEmail() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
@@ -26,7 +26,7 @@ export default function VerifyEmail() {
 
         const verifyEmail = async () => {
             try {
-                const response = await fetch(`https://aei-api.superfk.co/auth/register-verify?token=${token}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register-verify?token=${token}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -61,5 +61,13 @@ export default function VerifyEmail() {
                 <p>{verificationStatus}</p>
             )}
         </div>
+    );
+}
+
+export default function VerifyEmailInfo(){
+    return (
+        <Suspense fallback={<p>Loading...</p>}>
+            <VerifyEmail />
+        </Suspense>
     );
 }

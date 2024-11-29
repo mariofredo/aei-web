@@ -24,7 +24,8 @@ export default function Login() {
         };
 
         try {
-            const response = await fetch("https://aei-api.superfk.co/auth/login", {
+            // Panggil API login
+            const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,20 +33,36 @@ export default function Login() {
                 body: JSON.stringify(payload),
             });
 
-            const data = await response.json();
+            const loginData = await loginResponse.json();
 
-            if (response.ok) {
-                const token = data.data.token;
-                // Simpan token ke Cookies hanya di sisi klien
+            if (loginResponse.ok) {
+                const token = loginData.data.token;
+
+                // Simpan token ke Cookies
                 if (typeof window !== "undefined") {
                     Cookies.set("token", token, { secure: true, expires: 7 });
                 }
 
-                alert("Login successful!");
-                // Redirect ke halaman dashboard atau lainnya
-                window.location.href = "/";
+                // Panggil API untuk cek status profil
+                const profileResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register-step-2`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`, // Sertakan token dalam header
+                    },
+                });
+
+                const profileData = await profileResponse.json();
+
+                if (profileResponse.ok && profileData.data.isProfileComplete) {
+                    alert("Login successful!");
+                    window.location.href = "/";
+                } else {
+                    alert("Please complete your profile.");
+                    window.location.href = "/register/complete-profile";
+                }
             } else {
-                alert(data.message || "Failed to login.");
+                alert(loginData.message || "Failed to login.");
             }
         } catch (error) {
             console.error("Error during login:", error);
