@@ -1,0 +1,41 @@
+header{
+    width: 100%;
+    height: 90px;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.5);
+    .container{
+        height: 90px;
+        .logo{
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+        .lang_box{
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: #BDBDBD;
+            border-radius: 10px;
+            height: 30px;
+            line-height: 30px;
+            .lang{
+                display: inline-block;
+                padding: 0 10px;
+                cursor: pointer;
+                color: #fff;
+                border-radius: 10px;
+                font-weight: 400;
+                &.active{
+                    background: #2C347F;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}

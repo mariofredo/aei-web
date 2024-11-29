@@ -1,3 +1,4 @@
+import { Header, Footer } from "@/components";
 import {ClientLayout} from '@/components';
 import './globals.scss';
 
@@ -10,7 +11,11 @@ export default function RootLayout({children}) {
   return (
     <html lang='en'>
       <body>
-        <ClientLayout>{children}</ClientLayout>
+        <ClientLayout>
+          <Header />
+            <section>{children}</section>
+          <Footer />
+        </ClientLayout>
       </body>
     </html>
   );
