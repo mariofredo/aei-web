@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Cookie from 'js-cookie';
+import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 import '../../../styles/completeProfile.scss';
 
 export default function CompleteProfile(){
@@ -27,7 +28,14 @@ export default function CompleteProfile(){
     const [directorsPosition, setDirectorsPosition] = useState([]); // State to store director positions
     const [industryClassification, setIndustryClassification] = useState([]); // State to store industry classification
     const [picPosition, setPicPosition] = useState([]); // State to store pic position
+    const router = useRouter(); // For navigation after login
+
     const handleNext = () => {
+        // const errors = validateStep(step);
+        // if (errors.length > 0) {
+        //     alert(`Please fill in the following fields:\n- ${errors.join("\n- ")}`);
+        //     return;
+        // }
         if (step < 4) setStep(step + 1);
     };
 
@@ -151,9 +159,49 @@ export default function CompleteProfile(){
         fetchPicPosition(); // Call the function to fetch data on component mount
     }, []);
 
+    // const validateStep = (currentStep) => {
+    //     const errors = [];
+    //     switch (currentStep) {
+    //         case 1:
+    //             if (!formData.email) errors.push("Company Email");
+    //             if (!formData.officePhone) errors.push("Company Phone");
+    //             if (!formData.companyName) errors.push("Company Name");
+    //             if (!formData.website) errors.push("Company Website");
+    //             if (!formData.stockCode) errors.push("Stock Code");
+    //             if (!formData.ipoAdmissionDate) errors.push("Listing Date");
+    //             if (!formData.asset) errors.push("Total Asset");
+    //             break;
+    //         case 2:
+    //             formData.directors.forEach((leader, index) => {
+    //                 if (!leader.title) errors.push(`Leader ${index + 1} Title`);
+    //                 if (!leader.name) errors.push(`Leader ${index + 1} Name`);
+    //                 if (!leader.position) errors.push(`Leader ${index + 1} Position`);
+    //             });
+    //             break;
+    //         case 3:
+    //             if (!formData.headquarterAddress) errors.push("Headquarter Address");
+    //             if (!formData.managementOfficeAddress) errors.push("Management Office Address");
+    //             if (!formData.about) errors.push("About Company");
+    //             if (!formData.industryClassification) errors.push("Industry Classification");
+    //             if (!formData.subSector) errors.push("Sub Sector");
+    //             break;
+    //         case 4:
+    //             formData.pics.forEach((pic, index) => {
+    //                 if (!pic.name) errors.push(`PIC ${index + 1} Name`);
+    //                 if (!pic.position) errors.push(`PIC ${index + 1} Position`);
+    //                 if (!pic.phone) errors.push(`PIC ${index + 1} Phone`);
+    //                 if (!pic.email) errors.push(`PIC ${index + 1} Email`);
+    //             });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //     return errors;
+    // };
+    
     const handleSubmit = async () => {
         // Ambil access_token dari cookies
-        const accessToken = Cookie.get('token'); // Ganti dengan nama cookie yang sesuai
+        const accessToken = Cookies.get('token'); // Ganti dengan nama cookie yang sesuai
 
         if (!accessToken) {
             alert('Access token not found. Please login first.');
@@ -168,14 +216,18 @@ export default function CompleteProfile(){
                 },
                 body: JSON.stringify(formData),
             });
-            
-            if (!response.ok) {
-                throw new Error('Failed to submit data');
-            }
 
-            const result = await response.json();
-            console.log('Form Submitted:', result);
-            alert('Form submitted successfully!');
+            const data = await response.json();
+
+                if (response.ok) {
+                    alert('Form submitted successfully!');
+                    if (typeof window !== 'undefined'){
+                        Cookies.set('is_profile_completed', 'true', { expires: 7, path: '/' }); // Simpan status profil ke cookies
+                    }
+                    router.push("/"); // Redirect ke halaman home setelah submit
+                } else {
+                alert(data.message || 'Failed to submit data');
+            }
         } catch (error) {
             console.error('Error submitting form:', error);
             alert('Error submitting form. Please try again later.');
@@ -295,7 +347,7 @@ export default function CompleteProfile(){
                                     />
                                 </div>
                                 <div className="form_box">
-                                    <span className="title">Toal Asset<i>*</i></span>
+                                    <span className="title">Total Asset<i>*</i></span>
                                     <select
                                         name="asset"
                                         value={formData.asset}

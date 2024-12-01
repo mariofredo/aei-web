@@ -1,24 +1,34 @@
 import { NextResponse } from 'next/server';
 
-// Middleware to handle authentication-based routing
 export function middleware(req) {
-    const token = req.cookies.get('token'); // Retrieve token from cookies
-    const { pathname } = req.nextUrl; // Extract pathname from the request
+    const token = req.cookies.get('token'); // Ambil token dari cookies
+    const isProfileCompleted = req.cookies.get('is_profile_completed')?.value; // Ambil value
+    const { pathname } = req.nextUrl; // Path saat ini
 
-    // Redirect unauthenticated users trying to access protected routes
-    if (!token && pathname === '/') {
+    // Jika tidak ada token
+    if (!token && pathname !== '/login' && pathname !== '/register') {
+        console.log('No token found, redirecting to /login');
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
-    // Redirect authenticated users away from login/register pages
-    if (token && ['/login', '/register'].includes(pathname)) {
-        return NextResponse.redirect(new URL('/', req.url));
+    // Jika token ditemukan
+    if (token) {
+
+    // Cek apakah profil belum selesai
+    if (isProfileCompleted === 'false' && pathname !== '/register/complete-profile') {
+        return NextResponse.redirect(new URL('/register/complete-profile', req.url));
     }
 
-    return NextResponse.next(); // Proceed to the requested page
+    // Jika profil selesai
+    if (isProfileCompleted === 'true' && ['/login', '/register', '/register/complete-profile'].includes(pathname)) {
+        return NextResponse.redirect(new URL('/', req.url));
+    }
 }
 
-// Configure matcher for applying middleware to specific routes
+    return NextResponse.next(); // Lanjutkan ke halaman tujuan
+}
+
+// Konfigurasi matcher middleware
 export const config = {
-    matcher: ['/', '/login', '/register'], // Apply middleware only to these routes
+    matcher: ['/', '/login', '/register', '/register/complete-profile'],
 };

@@ -1,7 +1,8 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useRef, Suspense } from 'react';
-import Cookies from 'js-cookie';
+import '../../../styles/verifyEmail.scss';
+import Link from 'next/link';
 
 function VerifyEmail() {
     const router = useRouter();
@@ -52,14 +53,24 @@ function VerifyEmail() {
     }, [token, router]);
 
     return (
-        <div className="verify-email">
-            {loading ? (
-                <p>Verifying...</p>
-            ) : error ? (
-                <p style={{ color: 'red' }}>{error}</p>
-            ) : (
-                <p>{verificationStatus}</p>
-            )}
+        <div className="section_verify_email">
+            <div className="svm_box">
+                {loading ? (
+                    <div className="loader"></div>
+                ) : error ? (
+                    <div className='svm_error'>
+                        <h4>Verification Failed</h4>
+                        <p>Verification link is expired, click button below to resend the verification link</p>
+                        <button className='green_btn'><Link href="/register">Register</Link></button>
+                    </div>
+                ) : (
+                    <div className='svm_success'>
+                        <h4>Success!</h4>
+                        <p>Email verification success, your account is created already</p>
+                        <button className='green_btn'><Link href="/login">Login</Link></button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
