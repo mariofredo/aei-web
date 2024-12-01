@@ -5,3 +5,4 @@ export * from './modal';
 export * from './clientLayout';
 export * from './forms';
 export * from './stepper';
+export * from './cover';

@@ -4,12 +4,14 @@ import Cookies from "js-cookie";
 import { SlickSlider } from "@/components";
 import '../../styles/auth.scss';
 import Link from "next/link";
+import { useRouter } from "next/navigation";  // For programmatic navigation
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false); // State untuk mengontrol visibility password
+    const router = useRouter(); // For navigation after login
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState); // Toggle visibility
@@ -20,14 +22,14 @@ export default function Login() {
             alert("Please fill in all fields.");
             return;
         }
-
+    
         setLoading(true);
-
+    
         const payload = {
             email,
             password,
         };
-
+    
         try {
             // Panggil API login
             const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
@@ -37,34 +39,25 @@ export default function Login() {
                 },
                 body: JSON.stringify(payload),
             });
-
+    
             const loginData = await loginResponse.json();
-
+    
             if (loginResponse.ok) {
-                const token = loginData.data.token;
-
+                const { token, is_profile_completed } = loginData.data;
+    
                 // Simpan token ke Cookies
                 if (typeof window !== "undefined") {
-                    Cookies.set("token", token, { secure: true, expires: 7 });
+                    Cookies.set("token", token, { expires: 7, path: "/" });
+                    Cookies.set("is_profile_completed", is_profile_completed, { expires: 7, path: "/" });
                 }
-
-                // Panggil API untuk cek status profil
-                const profileResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register-step-2`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`, // Sertakan token dalam header
-                    },
-                });
-
-                const profileData = await profileResponse.json();
-
-                if (profileResponse.ok && profileData.data.isProfileComplete) {
+    
+                // Cek status profil dan arahkan ke halaman yang sesuai
+                if (is_profile_completed) {
                     alert("Login successful!");
-                    window.location.href = "/";
+                    router.push("/"); // Redirect to the homepage
                 } else {
                     alert("Please complete your profile.");
-                    window.location.href = "/register/complete-profile";
+                    router.push("/register/complete-profile"); // Redirect to profile completion page
                 }
             } else {
                 alert(loginData.message || "Failed to login.");
@@ -75,7 +68,7 @@ export default function Login() {
         } finally {
             setLoading(false);
         }
-    };
+    };    
 
     return (
         <div className="section_login">
