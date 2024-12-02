@@ -54,5 +54,5 @@ export default function useCompanyData() {
         return `${day} ${month} ${year}`;
     };
 
-    return { companyData, loading };
+    return { companyData, setCompanyData, loading };
 }

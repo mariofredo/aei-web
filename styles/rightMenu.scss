@@ -191,6 +191,12 @@
             padding: 40px 20px;
             text-align: center;
             width: 100%;
+            &.in_review{
+                padding: 80px 20px;
+                h3{
+                    color: #FFA629;
+                }
+            }
             h3{
                 font-size: 24px;
                 color: #2C347F;

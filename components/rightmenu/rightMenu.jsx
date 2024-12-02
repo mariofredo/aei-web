@@ -1,7 +1,13 @@
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import '../../styles/rightMenu.scss';
-export default function RightMenu({companyName, stockCode, listingDate, admissionDate, companyWeb, companyEmail, children, status, onTabClick, activeTab}) {
+import { ModalRegistrationForm } from '../modal';
+export default function RightMenu({companyName, stockCode, listingDate, admissionDate, companyWeb, companyEmail, children, status, onTabClick, activeTab, setCompanyData}) {
+    const [showPopup, setShowPopup] = useState(false);
+    console.log(status, 'status')
     return(
+        <>
         <div className="section_right_menu">
             <div className="section_top_menu">
                 <div className="section_company_name">
@@ -20,7 +26,7 @@ export default function RightMenu({companyName, stockCode, listingDate, admissio
                     <div className="company_website"><Link href={companyWeb} target='_blank' >{companyWeb}</Link></div>
                     <div className="company_email">{companyEmail}</div>
                     {status === 'data_submitted' ? (
-                        <div className="data_submitted">Upload Registration Form</div>
+                        <div className="data_submitted" onClick={() => setShowPopup(true)}>Upload Registration Form</div>
                     ) : status === 'in_review' ? (
                         <div className="in_review">Waiting for confirmation</div>
                     ) : null
@@ -59,5 +65,10 @@ export default function RightMenu({companyName, stockCode, listingDate, admissio
                 {children}
             </div>
         </div>
+
+        {showPopup && (
+            <ModalRegistrationForm setCompanyData={setCompanyData} showPopup={showPopup} setShowPopup={setShowPopup} />
+        )}
+        </>
     )
 }

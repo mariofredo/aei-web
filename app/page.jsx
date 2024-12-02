@@ -1,17 +1,18 @@
 'use client';
 import { useCompanyData, usePicData, useLeaderData } from "@/hooks";
 import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget } from "@/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-    const { companyData, loading } = useCompanyData();
+    const { companyData, setCompanyData, loading } = useCompanyData();
     const { picData } = usePicData();
     const { leaderData } = useLeaderData();
     const [activeTab, setActiveTab] = useState("Profile"); // Default tab aktif adalah Profile
+    useEffect(() => {console.log(companyData, 'companyData')}, [companyData])
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <div className="loader center"></div>;
     }
 
     const renderContent = () => {
@@ -53,7 +54,10 @@ export default function Home() {
                                 <Link href='' className="download_pdf_btn"><span>{companyData.companyName} Registration Form.PDF</span></Link>
                             </div>
                         ) : companyData.status === 'in_review' ? (
-                            <div className="in_review">Waiting for confirmation</div>
+                            <div className="section_membership_none in_review">
+                                <h3>Waiting for Confirmation</h3>
+                                <p>Your registration will be approved after we receive your <br/>registration hard file that already sended to our office.</p>
+                            </div>
                         ) : <div></div>
                         }
                     </>
@@ -132,7 +136,7 @@ export default function Home() {
     };  
     return (
         <div className="section_homepage">
-            <CoverImage cover={companyData.banner || null} />
+            <CoverImage cover={companyData?.banner || null} />
             <div className="container">
                 <LeftMenu hqAdress={companyData.headquarterAddress} officeAdress={companyData.managementOfficeAddress} logo={companyData.logo || null}></LeftMenu>
                 <RightMenu
@@ -144,6 +148,7 @@ export default function Home() {
                     status={companyData.status}
                     onTabClick={setActiveTab}
                     activeTab={activeTab}
+                    setCompanyData={setCompanyData}
                 >
                 {renderContent()}
                 </RightMenu>
