@@ -47,7 +47,18 @@ export default function CoverImage({ cover }) {
     return (
         <div className="section_cover_image">
             {preview ? (
+                <>
                 <Image src={preview} alt="Cover Image" width={1280} height={420} />
+                <div className="change_cover_btn">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        disabled={uploading} // Matikan input saat sedang upload
+                    />
+                    <span>Change background</span>
+                </div>
+                </>
             ) : (
             <div className="upload_cover_btn">
                 <input
