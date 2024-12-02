@@ -1,0 +1,49 @@
+.section_cover_image{
+    width: 100%;
+    height: 420px;
+    display: block;
+    position: relative;
+    margin-bottom: 30px;
+    img{
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .upload_cover_btn{
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        background: #C3C3C3;
+        top: 0;
+        left: 0;
+        input[type="file"]{
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+        span{
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: url('../public/images/icon_picture.png') no-repeat left center / 24px;
+            color: #2C347F;
+            font-size: 24px;
+            font-weight: bold;
+            padding-left: 30px;
+            z-index: 5;
+            transform: translate(-50%, -50%);
+        }
+    }
+}

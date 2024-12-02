@@ -6,3 +6,5 @@ export * from './clientLayout';
 export * from './forms';
 export * from './stepper';
 export * from './cover';
+export * from './rightmenu';
+export * from './leftmenu';
