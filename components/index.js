@@ -8,3 +8,4 @@ export * from './stepper';
 export * from './cover';
 export * from './rightmenu';
 export * from './leftmenu';
+export * from './tradingView';

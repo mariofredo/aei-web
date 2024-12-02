@@ -291,6 +291,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="email"
                                         name="email"
+                                        placeholder='example@mail.com'
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
@@ -301,6 +302,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="tel"
                                         name="officePhone"
+                                        placeholder='0211234567'
                                         value={formData.officePhone}
                                         onChange={handleChange}
                                         required
@@ -311,6 +313,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="text"
                                         name="companyName"
+                                        placeholder='Your Company Name'
                                         value={formData.companyName}
                                         onChange={handleChange}
                                         required
@@ -321,6 +324,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="text"
                                         name="website"
+                                        placeholder='www.company.com'
                                         value={formData.website}
                                         onChange={handleChange}
                                         required
@@ -331,6 +335,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="text"
                                         name="stockCode"
+                                        placeholder='Your Stock Code'
                                         value={formData.stockCode}
                                         onChange={handleChange}
                                         required
@@ -404,7 +409,7 @@ export default function CompleteProfile(){
                                                     name={`directors-${index}-name`}
                                                     value={leader.name}
                                                     onChange={handleChange}
-                                                    placeholder="Your Name"
+                                                    placeholder="Leader's Name"
                                                 />
                                             </div>
                                             <div className="form_box">
@@ -416,7 +421,7 @@ export default function CompleteProfile(){
                                                     required
                                                 >
                                                     <option value="" disabled>
-                                                        Posisi
+                                                        Select Leader Position
                                                     </option>
                                                     {directorsPosition.map((directorpos) => (
                                                         <option key={directorpos.id} value={directorpos.id}>
@@ -448,6 +453,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="text"
                                         name="headquarterAddress"
+                                        placeholder='Your Headquarter Address'
                                         value={formData.headquarterAddress}
                                         onChange={handleChange}
                                     />
@@ -457,6 +463,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="text"
                                         name="managementOfficeAddress"
+                                        placeholder='Your Management Office Address'
                                         value={formData.managementOfficeAddress}
                                         onChange={handleChange}
                                     />
@@ -466,6 +473,7 @@ export default function CompleteProfile(){
                                     <textarea
                                         type="text"
                                         name="about"
+                                        placeholder='Your Company Description'
                                         value={formData.about}
                                         onChange={handleChange}
                                     />
@@ -491,6 +499,7 @@ export default function CompleteProfile(){
                                     <input
                                         type="text"
                                         name="subSector"
+                                        placeholder='Your Sub Sector'
                                         value={formData.subSector}
                                         onChange={handleChange}
                                     />
@@ -511,7 +520,7 @@ export default function CompleteProfile(){
                                                     name={`pics-${index}-name`}
                                                     value={pic.name}
                                                     onChange={handleChange}
-                                                    placeholder="Your Name"
+                                                    placeholder="PIC's Name"
                                                 />
                                             </div>
                                             <div className="form_box">
@@ -523,7 +532,7 @@ export default function CompleteProfile(){
                                                     required
                                                 >
                                                     <option value="" disabled>
-                                                        Posisi
+                                                        Select PIC Position
                                                     </option>
                                                     {picPosition.map((picpos) => (
                                                         <option key={picpos.id} value={picpos.id}>
@@ -538,6 +547,7 @@ export default function CompleteProfile(){
                                                     type="tel"
                                                     name={`pics-${index}-phone`}
                                                     value={pic.phone}
+                                                    placeholder='Your PIC number'
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -547,6 +557,7 @@ export default function CompleteProfile(){
                                                     type="email"
                                                     name={`pics-${index}-email`}
                                                     value={pic.email}
+                                                    placeholder='Your PIC Email'
                                                     onChange={handleChange}
                                                 />
                                             </div>

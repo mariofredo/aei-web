@@ -1,12 +1,13 @@
 'use client';
-import { useCompanyData, usePicData } from "@/hooks";
-import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu } from "@/components";
+import { useCompanyData, usePicData, useLeaderData } from "@/hooks";
+import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget } from "@/components";
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
     const { companyData, loading } = useCompanyData();
     const { picData } = usePicData();
+    const { leaderData } = useLeaderData();
     const [activeTab, setActiveTab] = useState("Profile"); // Default tab aktif adalah Profile
 
     if (loading) {
@@ -35,7 +36,9 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                        <div className="section_profile_right"></div>
+                        <div className="section_profile_right">
+                            <TradingViewWidget />
+                        </div>
                     </>
 
                 )
@@ -62,6 +65,32 @@ export default function Home() {
                     <>
                         <div className="section_table_box">
                             <div className="stb_ctr">
+                                <h3>Leader</h3>
+                                <div className="add_more_btn">Add More</div>
+                            </div>
+                            <table>
+                                {leaderData.map((leaderData) => (
+                                    <tr>
+                                        <td>
+                                            <span>Name</span>
+                                            {leaderData.title} {leaderData.name}
+                                        </td>
+                                        <td>
+                                            <span>Position</span>
+                                            {leaderData.positionName}
+                                        </td>
+                                        <td>
+                                            <div className="action_btn">
+                                                <div className="delete_btn">Delete</div>
+                                                <div className="edit_btn">Edit</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </table>
+                        </div>
+                        <div className="section_table_box">
+                            <div className="stb_ctr">
                                 <h3>PIC</h3>
                                 <div className="add_more_btn">Add More</div>
                             </div>
@@ -86,9 +115,9 @@ export default function Home() {
                                         </td>
                                         <td>
                                             <div className="action_btn">
-                                                <div className="change_password">Change Password</div>
-                                                <div className="edit_btn">Edit</div>
                                                 <div className="delete_btn">Delete</div>
+                                                <div className="edit_btn">Edit</div>
+                                                <div className="change_password">Change Password</div>
                                             </div>
                                         </td>
                                     </tr>
