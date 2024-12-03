@@ -38,4 +38,27 @@ header{
             }
         }
     }
+    &.login{
+        background: none;
+        box-shadow: none;
+        position: absolute;
+        .container{
+            .logo{
+                filter: brightness(0) invert(1);
+            }
+            .notif_box{
+                width: 58px;
+                height: 58px;
+                border-radius: 58px;
+                background:#fff url('../public/images/icon_notif.png') no-repeat center / 17px;
+                position: absolute;
+                top: 50%;
+                right: 130px;
+                transform: translateY(-50%);
+            }
+        }
+        &+ section{
+            padding-top: 0;
+        }
+    }
 }

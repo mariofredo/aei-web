@@ -1,5 +1,5 @@
 'use client';
-import { useCompanyData, usePicData, useLeaderData } from "@/hooks";
+import { useCompanyData, usePicData, useLeaderData, useUpcomingData } from "@/hooks";
 import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget } from "@/components";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -8,6 +8,7 @@ export default function Home() {
     const { companyData, setCompanyData, loading } = useCompanyData();
     const { picData } = usePicData();
     const { leaderData } = useLeaderData();
+    const { upcomingData } = useUpcomingData();
     const [activeTab, setActiveTab] = useState("Profile"); // Default tab aktif adalah Profile
     useEffect(() => {console.log(companyData, 'companyData')}, [companyData])
 
@@ -63,7 +64,17 @@ export default function Home() {
                     </>
                 )
             case "Activity":
-                return <p>Ini adalah konten Activity</p>;
+                return (
+                    <div className="section_activity">
+                        {upcomingData.map((upcomingdatas) => (
+                            <div className="sa_box">
+                                <h3>{upcomingdatas.title}</h3>
+                                <p>{upcomingdatas.date}</p>
+                                <p>{upcomingdatas.description}</p>
+                            </div>
+                            ))}
+                    </div>
+                )
             case "Leaders and PIC":
                 return (
                     <>
