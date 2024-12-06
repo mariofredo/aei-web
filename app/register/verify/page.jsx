@@ -75,7 +75,7 @@ function VerifyEmail() {
 
 export default function VerifyEmailInfo(){
     return (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<div className="loader center"></div>}>
             <VerifyEmail />
         </Suspense>
     );
