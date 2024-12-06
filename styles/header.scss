@@ -39,9 +39,7 @@ header{
         }
     }
     &.login{
-        background: none;
-        box-shadow: none;
-        position: absolute;
+        background: rgba($color: #000000, $alpha: 0.2);
         .container{
             .logo{
                 filter: brightness(0) invert(1);
@@ -53,8 +51,27 @@ header{
                 background:#fff url('../public/images/icon_notif.png') no-repeat center / 17px;
                 position: absolute;
                 top: 50%;
-                right: 130px;
+                right: 260px;
                 transform: translateY(-50%);
+            }
+            .lang_box{
+                right: 150px;
+            }
+            .logout_btn{
+                width: 140px;
+                height: 46px;
+                line-height: 46px;
+                background: #fff url('../public/images/icon_logout.png') no-repeat 20px center / 18px;
+                display: block;
+                border-radius: 20px;
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                color: #EF6161;
+                padding-left: 50px;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
             }
         }
         &+ section{

@@ -1,11 +1,10 @@
 'use client';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, useRef, Suspense } from 'react';
 import '../../../styles/verifyEmail.scss';
 import Link from 'next/link';
 
 function VerifyEmail() {
-    const router = useRouter();
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
     const [loading, setLoading] = useState(true);
@@ -37,7 +36,6 @@ function VerifyEmail() {
 
                 if (response.ok) {
                     setVerificationStatus('Email verified successfully!');
-                    router.push('/login');
                 } else {
                     setError(data.message || "Verification failed.");
                 }

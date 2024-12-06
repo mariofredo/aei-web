@@ -76,7 +76,9 @@ input[type="number"]{
   opacity: 1;
 }
 .green_btn,
-.grey_btn{
+.grey_btn,
+.orange_btn,
+.blue_btn{
   width: 100%;
   background: #19A748;
   color: #fff;
@@ -94,6 +96,12 @@ input[type="number"]{
 .grey_btn{
   background: #E4E4E4;
   color: #332C2B;
+}
+.orange_btn{
+  background: #FFA629;
+}
+.blue_btn{
+  background: #2F318B;
 }
 section{
   padding-top: 90px;

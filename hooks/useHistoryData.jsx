@@ -2,27 +2,25 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 
-export default function usePicData() {
-    const [picData, setPicData] = useState(null);
+export default function useHistoryData() {
+    const [historyData, setHistoryData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const type = Cookies.get("type"); // Ambil tipe user dari Cookies
-    const email = Cookies.get("email"); // Ambil email user dari Cookies
 
     useEffect(() => {
         const isProfileCompleted = Cookies.get('is_profile_completed');
 
         if (isProfileCompleted === 'true') {
-            fetchPicData();
+            fetchHistoryData();
         } else {
             console.log("Profile not completed, redirecting...");
             setLoading(false);
         }
     }, []);
 
-    const fetchPicData = async () => {
+    const fetchHistoryData = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/company-pic`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/history`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${Cookies.get('token')}`,
@@ -32,7 +30,7 @@ export default function usePicData() {
                 throw new Error("Failed to fetch Pic data");
             }
             const data = await response.json();
-            setPicData(data.data);
+            setHistoryData(data.data.data);
             console.log("Pic data fetched:", data);
         } catch (error) {
             console.error("Error fetching Pic data:", error);
@@ -41,5 +39,5 @@ export default function usePicData() {
         }
     };
 
-    return { picData, loading, type, email };
+    return { historyData, loading };
 }

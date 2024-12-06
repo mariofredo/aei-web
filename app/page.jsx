@@ -1,20 +1,29 @@
 'use client';
-import { useCompanyData, usePicData, useLeaderData, useUpcomingData } from "@/hooks";
-import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget } from "@/components";
+import { useCompanyData, usePicData, useLeaderData, useUpcomingData, useHistoryData, useInvoicesData } from "@/hooks";
+import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget, CardEvent, ModalChangePassword } from "@/components";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedId, setSelectedId] = useState(null);
     const { companyData, setCompanyData, loading } = useCompanyData();
-    const { picData } = usePicData();
+    const { picData, type, email } = usePicData();
     const { leaderData } = useLeaderData();
     const { upcomingData } = useUpcomingData();
+    const { historyData } = useHistoryData();
+    const { invoices } = useInvoicesData();
     const [activeTab, setActiveTab] = useState("Profile"); // Default tab aktif adalah Profile
+    const [activityTab, setActivityTab] = useState("upcoming"); // State untuk tab aktif
     useEffect(() => {console.log(companyData, 'companyData')}, [companyData])
+    
 
     if (loading) {
         return <div className="loader center"></div>;
     }
+    const handleTabClick = (tab) => {
+        setActivityTab(tab); // Mengubah tab aktif berdasarkan klik
+    };
 
     const renderContent = () => {
         switch (activeTab) {
@@ -59,20 +68,82 @@ export default function Home() {
                                 <h3>Waiting for Confirmation</h3>
                                 <p>Your registration will be approved after we receive your <br/>registration hard file that already sended to our office.</p>
                             </div>
-                        ) : <div></div>
+                        ) :
+                            <div className="section_membership">
+                                <div className="sm_left">
+                                    <div className="membership_box">
+                                        <h3>Membership</h3>
+                                        <div className="mb_ctr">
+                                            <h5>Membership Number</h5>
+                                            <span>{companyData.membershipNumber}</span>
+                                        </div>
+                                        <div className="mb_ctr">
+                                            <h5>Member Category</h5>
+                                            <span className="green_text">{companyData.companyCategoryName}</span>
+                                        </div>
+                                    </div>
+                                    {companyData.memberStatus === 'inactive' ? (
+                                        <div className="member_status inactive">status: <span>Inactive</span></div>
+                                    ) : companyData.memberStatus === 'paid' ? (
+                                        <div className="member_status paid">status: <span>Active</span></div>
+                                    ) : (
+                                        <div className="member_status expired">status: <span>Expired</span></div>
+                                    )}
+
+                                </div>
+                                <div className="sm_right">
+                                    <div className="section_payment_home">
+                                        <h3>Payment History</h3>
+                                        <div className="sp_wrap">
+                                            {invoices.map((invoice) => (
+                                            <div className="sp_box">
+                                                <h5>{invoice.code}</h5>
+                                                {invoice.note && <span className="info">{invoice.note}</span>}
+                                                <span className="date">{invoice.invoiceDate}</span>
+                                                {invoice.status === 'in_review' ? (
+                                                    <span className="orange_btn">waiting confirmation</span>
+                                                ) : invoice.status === 'paid' ? (
+                                                    <span className="blue_btn"><span></span></span>
+                                                ) : (
+                                                    <Link href={`/payment?invoiceCode=${invoice.id}`} className="green_btn">Pay</Link>
+                                                )}
+                                            </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
                     </>
                 )
             case "Activity":
                 return (
                     <div className="section_activity">
-                        {upcomingData.map((upcomingdatas) => (
-                            <div className="sa_box">
-                                <h3>{upcomingdatas.title}</h3>
-                                <p>{upcomingdatas.date}</p>
-                                <p>{upcomingdatas.description}</p>
+                        <div className="sa_top">
+                            <h3>Seminar</h3>
+                            <div className="sa_menu">
+                                <div
+                                    className={`upcoming_btn ${activityTab === "upcoming" ? "active" : ""}`}
+                                    onClick={() => handleTabClick("upcoming")}
+                                >
+                                    Upcoming
+                                </div>
+                                {historyData.length > 0 ? (
+                                    <div
+                                        className={`history_btn ${activityTab === "history" ? "active" : ""}`}
+                                        onClick={() => handleTabClick("history")}
+                                    >
+                                        History
+                                    </div>
+                                ) : (
+                                    <div className="history_btn"><span>History</span></div>
+                                )}
                             </div>
-                            ))}
+                        </div>
+                        <div className="card_flex">
+                            {activityTab === "upcoming" && <CardEvent events={upcomingData} />}
+                            {activityTab === "history" && <CardEvent events={historyData} />}
+                        </div>
                     </div>
                 )
             case "Leaders and PIC":
@@ -130,9 +201,27 @@ export default function Home() {
                                         </td>
                                         <td>
                                             <div className="action_btn">
-                                                <div className="delete_btn">Delete</div>
-                                                <div className="edit_btn">Edit</div>
-                                                <div className="change_password">Change Password</div>
+                                                {type === "pic" && email === picData.email || type === "master" ? (
+                                                    <>
+                                                        <div className="delete_btn">Delete</div>
+                                                        <div className="edit_btn">Edit</div>
+                                                        <div 
+                                                            className="change_password" 
+                                                            onClick={() => {
+                                                                setSelectedId(picData.id);  // Set ID saat tombol Change Password diklik
+                                                                setShowPopup(true);  // Tampilkan popup
+                                                            }}
+                                                        >
+                                                            Change Password
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <div className="delete_btn disabled">Delete</div>
+                                                        <div className="edit_btn disabled">Edit</div>
+                                                        <div className="change_password disabled">Change Password</div>
+                                                    </>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
@@ -146,6 +235,7 @@ export default function Home() {
         }
     };  
     return (
+        <>
         <div className="section_homepage">
             <CoverImage cover={companyData?.banner || null} />
             <div className="container">
@@ -164,7 +254,15 @@ export default function Home() {
                 {renderContent()}
                 </RightMenu>
             </div>
-            <ModalRegistrationSuccess company={companyData.companyName} />
+             {status === 'data_submitted' && <ModalRegistrationSuccess company={companyData.companyName} /> }
         </div>
+        {showPopup && (
+            <ModalChangePassword
+                showPopup={showPopup}
+                setShowPopup={setShowPopup}
+                id={selectedId}  // Pass ID yang dipilih ke Modal
+            />
+        )}
+        </>
     );
 }

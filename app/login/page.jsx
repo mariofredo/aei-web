@@ -43,12 +43,16 @@ export default function Login() {
             const loginData = await loginResponse.json();
     
             if (loginResponse.ok) {
-                const { token, is_profile_completed } = loginData.data;
+                const { token, is_profile_completed, user } = loginData.data;
+                const { type } = user;
+                const { email } = user;
     
                 // Simpan token ke Cookies
                 if (typeof window !== "undefined") {
                     Cookies.set("token", token, { expires: 7, path: "/" });
                     Cookies.set("is_profile_completed", is_profile_completed, { expires: 7, path: "/" });
+                    Cookies.set("type", type, { expires: 7, path: "/" });
+                    Cookies.set("email", email, { expires: 7, path: "/" });
                 }
     
                 // Cek status profil dan arahkan ke halaman yang sesuai
