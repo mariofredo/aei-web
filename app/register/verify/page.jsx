@@ -48,7 +48,7 @@ function VerifyEmail() {
         };
 
         verifyEmail();
-    }, [token, router]);
+    }, [token]);
 
     return (
         <div className="section_verify_email">
