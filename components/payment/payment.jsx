@@ -1,12 +1,12 @@
 'use client';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import '../../styles/payment.scss';
 import { BCA, Mandiri } from "@/public";
 
-export default function Payment() {
+function Payment() {
     const [selectedBank, setSelectedBank] = useState("");
     const [confirmedBank, setConfirmedBank] = useState("");
     const searchParams = useSearchParams(); // Untuk membaca query parameters
@@ -306,4 +306,11 @@ export default function Payment() {
             </div>
         </div>
     )
+}
+export default function PaymentInfo(){
+    return (
+        <Suspense fallback={<p>Loading...</p>}>
+            <Payment />
+        </Suspense>
+    );
 }
