@@ -1,9 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useLeaderData } from '@/hooks';
 import Cookies from 'js-cookie';
 
-export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeaderPopup, data }) {
+export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeaderPopup, data, setLeaderData }) {
     const [directorsPosition, setDirectorsPosition] = useState([]); // State to store director positions
+    const {fetchLeaderData} = useLeaderData();
     const [isOtherSelected, setIsOtherSelected] = useState(false);
     const [name, setName] = useState('');
     const [positionId, setPositionId] = useState('');
@@ -83,6 +85,7 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
             if (response.ok) {
                 alert('Leader updated successfully');
                 setShowEditLeaderPopup(false);
+                fetchLeaderData().then((data) => setLeaderData(data.data));
             } else {
                 console.error('Failed to update Leader');
             }
@@ -140,7 +143,9 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
                             onChange={(e) => {
                                 console.log("Selected Value:", e.target.value);
                                 if(e.target.value === "others")
-                                    setIsOtherSelected(true);                                
+                                    setIsOtherSelected(true);
+                                else
+                                    setIsOtherSelected(false);                              
                                 setPositionId(e.target.value);
                             }}
                             required
@@ -155,7 +160,6 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
                             ))}
                             <option value="others">Others</option>
                         </select>
-                        <div>{isOtherSelected }</div>
                         {isOtherSelected && (
                             <input
                                 type="text"

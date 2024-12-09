@@ -1,8 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { usePicData } from '@/hooks';
 import Cookies from 'js-cookie';
 
-export default function ModalEditPic({ showEditPopup, setShowEditPopup, data }) {
+export default function ModalEditPic({ showEditPopup, setShowEditPopup, data, setPicData }) {
+    const { fetchPicData } = usePicData();
     const [picPosition, setPicPosition] = useState([]); // State to store pic positions
     const [name, setName] = useState('');
     const [positionId, setPositionId] = useState('');
@@ -55,6 +57,7 @@ export default function ModalEditPic({ showEditPopup, setShowEditPopup, data }) 
             if (response.ok) {
                 alert('PIC updated successfully');
                 setShowEditPopup(false);
+                fetchPicData().then((data) => setPicData(data.data));
             } else {
                 console.error('Failed to update PIC');
             }

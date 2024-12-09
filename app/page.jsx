@@ -326,6 +326,7 @@ export default function Home() {
             <ModalEditPic 
             showEditPopup={showEditPopup} 
             setShowEditPopup={setShowEditPopup} 
+            setPicData={setPicData}
             data={editPopupData}
             />
         )}
@@ -333,6 +334,7 @@ export default function Home() {
             <ModalEditLeader
             showEditLeaderPopup={showEditLeaderPopup} 
             setShowEditLeaderPopup={setShowEditLeaderPopup} 
+            setLeaderData={setLeaderData}
             data={editLeaderPopupData}
             />
         )}
