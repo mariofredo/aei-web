@@ -285,6 +285,9 @@
                     &.inactive{
                         background: linear-gradient(0deg, #ff9500 50%, #FFB855 100%);
                     }
+                    &.paid{
+                        background: linear-gradient(0deg, #009B4C 50%, #00C16E 100%);
+                    }
                     span{
                         font-weight: bold;
                         font-size: 24px;
