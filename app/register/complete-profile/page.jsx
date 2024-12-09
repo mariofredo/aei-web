@@ -20,15 +20,16 @@ export default function CompleteProfile(){
         subSector: "",
         industryClassification: 1,
         directors: [
-            { title: "", name: "", position: 1 }
+            { title: "", name: "", position: "", otherPosition: "" }
         ],
-        pics: [{ name: "", email: "", position: 1, phone: "" }]
+        pics: [{ name: "", email: "", position: "", phone: "" }]
     });
     const [assets, setAssets] = useState([]); // State to store company assets
     const [directorsPosition, setDirectorsPosition] = useState([]); // State to store director positions
     const [industryClassification, setIndustryClassification] = useState([]); // State to store industry classification
     const [picPosition, setPicPosition] = useState([]); // State to store pic position
     const router = useRouter(); // For navigation after login
+    const [isOtherSelected, setIsOtherSelected] = useState(false);
 
     const handleNext = () => {
         // const errors = validateStep(step);
@@ -92,7 +93,12 @@ export default function CompleteProfile(){
 
         fetchAssets(); // Call the function to fetch data on component mount
     }, []);
-
+    useEffect(() => {
+        if(Cookies.get('email')) setFormData((prevFormData) => ({
+            ...prevFormData,
+            pics:  [{ name: "", email: Cookies.get('email'), position: "", phone: "" }],
+        }));
+    }, [Cookies.get('email')]);
     useEffect(() => {
         // Fetch asset data from the API
         const fetchDirectorsPosition = async () => {
@@ -207,6 +213,18 @@ export default function CompleteProfile(){
             alert('Access token not found. Please login first.');
             return;
         }
+        // Cek dan ganti posisi jika 'others' dipilih
+        const updatedFormData = formData.directors.map((director) => {
+            if (director.position === "others" && director.otherPosition) {
+                // Ganti nilai position dengan value dari otherPosition
+                director.position = director.otherPosition;
+            }
+            return director;
+        });
+
+        // Perbarui formData dengan nilai yang sudah diperbarui
+        const updatedData = { ...formData, directors: updatedFormData };
+        
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register-step-2`, {
                 method: 'POST',
@@ -231,6 +249,20 @@ export default function CompleteProfile(){
         } catch (error) {
             console.error('Error submitting form:', error);
             alert('Error submitting form. Please try again later.');
+        }
+    };
+
+    const handleSelectChange = (e) => {
+        const { name, value } = e.target;
+
+        // Update pilihan dalam dropdown
+        handleChange(e);
+
+        // Tampilkan input tambahan jika "Others" dipilih
+        if (value === "others") {
+            setIsOtherSelected(true);
+        } else {
+            setIsOtherSelected(false);
         }
     };
 
@@ -417,7 +449,7 @@ export default function CompleteProfile(){
                                                 <select
                                                     name={`directors-${index}-position`}
                                                     value={leader.position}
-                                                    onChange={handleChange}
+                                                    onChange={handleSelectChange}
                                                     required
                                                 >
                                                     <option value="" disabled>
@@ -428,7 +460,17 @@ export default function CompleteProfile(){
                                                             {directorpos.name}
                                                         </option>
                                                     ))}
+                                                    <option value="others">Others</option>
                                                 </select>
+                                                {isOtherSelected && (
+                                                    <input
+                                                        type="text"
+                                                        name={`directors-${index}-otherPosition`}
+                                                        value={leader.otherPosition}
+                                                        onChange={handleChange}
+                                                        placeholder="Specify Other Position"
+                                                    />
+                                                )}
                                             </div>
                                             {formData.directors.length > 1 && (
                                                 <button
@@ -558,7 +600,8 @@ export default function CompleteProfile(){
                                                     name={`pics-${index}-email`}
                                                     value={pic.email}
                                                     placeholder='Your PIC Email'
-                                                    onChange={handleChange}
+                                                    onChange={handleChange} 
+                                                    disabled={index === 0}
                                                 />
                                             </div>
                                             {formData.pics.length > 1 && (

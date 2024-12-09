@@ -2,3 +2,8 @@ export {default as ModalVerificationCode} from './modalVerificationCode';
 export {default as ModalRegistrationSuccess} from './modalRegistrationSuccess';
 export {default as ModalRegistrationForm} from './modalRegistrationForm';
 export {default as ModalChangePassword} from './modalChangePassword';
+export {default as ModalPic} from './modalPic';
+export {default as ModalLeader} from './modalLeader';
+export {default as ModalEditPic} from './modalEditPic';
+export {default as ModalEditLeader} from './modalEditLeader';
+export {default as ModalEditProfile} from './modalEditProfile';

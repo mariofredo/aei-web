@@ -93,8 +93,8 @@ function Payment() {
             });
     
             const data = await response.json();
-    
-            if (data.code === 200) {
+
+            if (response.ok) {
                 setConfirmedBank(confirmedBank);
                 router.push("/");
             } else {
@@ -142,8 +142,8 @@ function Payment() {
             maximumFractionDigits: 0,
         }).format(value).replace(/[^\d]/g, '');  // Menghapus karakter non-numerik
     };
-    if (!invoiceCode) return <p>Loading...</p>; // Show a placeholder until query params are available
-    if (loading) return <p>Loading...</p>;
+    if (!invoiceCode) return <div className="loader center"></div>; // Show a placeholder until query params are available
+    if (loading) return <div className="loader center"></div>;
     if (error) return <p>Error: {error}</p>;
     
     const additionalContent = () => {
@@ -309,7 +309,7 @@ function Payment() {
 }
 export default function PaymentInfo(){
     return (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<div className="loader center"></div>}>
             <Payment />
         </Suspense>
     );

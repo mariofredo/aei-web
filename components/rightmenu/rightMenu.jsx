@@ -1,18 +1,26 @@
 'use client';
 import { useState } from 'react';
+import { useCompanyData } from '@/hooks';
 import Link from 'next/link';
 import '../../styles/rightMenu.scss';
-import { ModalRegistrationForm } from '../modal';
+import { ModalEditProfile, ModalRegistrationForm } from '../modal';
 export default function RightMenu({companyName, stockCode, listingDate, admissionDate, companyWeb, companyEmail, children, status, onTabClick, activeTab, setCompanyData}) {
-    const [showPopup, setShowPopup] = useState(false);
-    console.log(status, 'status')
+    const [showPopup, setShowPopup] = useState(false);  
+    const [editProfilePopupData, setEditProfilePopupData] = useState(null); // Data untuk form edit
+    const [showEditProfilePopup, setShowEditProfilePopup] = useState(false); // Status popup
+
+    const handleEditProfilePopup = async (data) => {
+        setEditProfilePopupData(data);
+        setShowEditProfilePopup(true);
+    }
+    
     return(
         <>
         <div className="section_right_menu">
             <div className="section_top_menu">
                 <div className="section_company_name">
                     <h2>{companyName}</h2>
-                    <span className="edit_profile_btn">Edit Profile</span>
+                    <span className="edit_profile_btn" onClick={() => handleEditProfilePopup(companyData)}>Edit Profile</span>
                 </div>
                 <div className="section_company_stock_code">
                     <h5>Stock Code:</h5>
@@ -68,6 +76,9 @@ export default function RightMenu({companyName, stockCode, listingDate, admissio
 
         {showPopup && (
             <ModalRegistrationForm setCompanyData={setCompanyData} showPopup={showPopup} setShowPopup={setShowPopup} />
+        )}
+        {showEditProfilePopup && (
+            <ModalEditProfile setCompanyData={setCompanyData} showEditProfilePopup={showEditProfilePopup} setShowEditProfilePopup={setShowEditProfilePopup} />
         )}
         </>
     )

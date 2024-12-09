@@ -7,7 +7,7 @@ import "../../styles/header.scss";
 import Link from "next/link";
 export default function Header(){
     const pathname = usePathname(); // Dapatkan path aktif
-    const isHomePage = pathname === "/";
+    const isHomePage = pathname === "/" || pathname.startsWith("/event/"); // Cek apakah halaman home
     const router = useRouter();
     const handleLogout = async () => {
         try {

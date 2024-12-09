@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useRef, memo } from 'react';
 
-function TradingViewWidget() {
+function TradingViewWidget({ stockCode }) {
   const container = useRef();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function TradingViewWidget() {
       {
         "symbols": [
           [
-            "IDX:BBCA|ALL"
+            "IDX:${stockCode}|ALL"
           ]
         ],
         "chartOnly": false,

@@ -26,7 +26,7 @@ export default function ModalChangePassword({ showPopup, setShowPopup, id }) {
 
         try {
             const token = Cookies.get('token'); // Ambil token dari cookie
-            const response = await fetch(`{{base_url}}/company-pic/${id}/update-password`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/company-pic/${id}/update-password`, {
                 method: 'POST', // atau PUT, sesuai kebutuhan API
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,13 +52,13 @@ export default function ModalChangePassword({ showPopup, setShowPopup, id }) {
     if (!showPopup) return null;
 
     return (
-        <div className="modal_wrapper registration_form">
+        <div className="modal_wrapper change_password">
             <div className="overlay" onClick={() => setShowPopup(false)}></div>
             <div className="modal_box">
                 <h2>Change Password</h2>
                 <div className="modal_content">
                     <div className="form_box">
-                        <label htmlFor="new_password">New Password</label>
+                        <span className="title">New Password</span>
                         <input
                             type="password"
                             id="new_password"
@@ -70,7 +70,7 @@ export default function ModalChangePassword({ showPopup, setShowPopup, id }) {
                         <div className={`show_pass ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>wkwwk</div>
                     </div>
                     <div className="form_box">
-                        <label htmlFor="confirm_password">Confirm Password</label>
+                        <span className="title">Confirm Password</span>
                         <input
                             type="password"
                             id="confirm_password"
