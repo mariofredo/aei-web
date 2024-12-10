@@ -7,6 +7,7 @@ import {LuCircleMinus} from 'react-icons/lu';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components';
 import {BCA, Mandiri} from '@/public';
+import {formatCurrency, formatCurrencyCopy} from '@/utils';
 import '@/styles/eventPayment.scss';
 
 export default function Page() {
@@ -27,15 +28,6 @@ export default function Page() {
   const [accountName, setAccountName] = useState('');
   const [paymentProof, setPaymentProof] = useState(null);
   const [paymentProofName, setPaymentProofName] = useState('');
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
 
   const handleAddParticipant = () => {
     setParticipants([
@@ -86,9 +78,7 @@ export default function Page() {
     slug && handleGetDetail();
   }, [slug]);
 
-  const handleJoinEvent = useCallback(async()=>{
-
-  },[])
+  const handleJoinEvent = useCallback(async () => {}, []);
 
   const handlePaymentConfirmation = async () => {
     let formError = {};
@@ -136,16 +126,6 @@ export default function Page() {
       console.error(err);
       alert('Error confirming payment');
     }
-  };
-
-  const formatCurrencyCopy = (value) => {
-    // Format angka tanpa simbol "Rp" dan tanpa pemisah ribuan
-    return new Intl.NumberFormat('id-ID', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    })
-      .format(value)
-      .replace(/[^\d]/g, ''); // Menghapus karakter non-numerik
   };
 
   const handleCopy = (e) => {

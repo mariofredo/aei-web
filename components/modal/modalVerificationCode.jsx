@@ -1,4 +1,5 @@
 'use client';
+import {formatTime} from '@/utils';
 import '../../styles/modalVerificationCode.scss';
 export default function ModalVerificationCode({
   timer,
@@ -6,14 +7,6 @@ export default function ModalVerificationCode({
   handleResendOTP,
   email,
 }) {
-  // Fungsi untuk mengubah timer detik menjadi format mm:ss
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(
-      remainingSeconds
-    ).padStart(2, '0')}`;
-  };
   return (
     <div className="modal_wrapper">
       <div className="overlay"></div>

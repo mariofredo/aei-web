@@ -3,7 +3,8 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation'; // Untuk navigasi
 import Image from 'next/image';
 import Cookies from 'js-cookie';
-import '../../../styles/eventDetail.scss';
+import {formatDate} from '@/utils';
+import '@/styles/eventDetail.scss';
 
 export default function EventDetail({params}) {
   const {slug} = params;
@@ -45,28 +46,6 @@ export default function EventDetail({params}) {
   useEffect(() => {
     fetchEventData();
   }, [slug]);
-
-  const formatDate = (isoDate) => {
-    const date = new Date(isoDate);
-    const day = String(date.getDate()).padStart(2, '0');
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
-  };
 
   if (loading) {
     return <div className="loader center"></div>;
