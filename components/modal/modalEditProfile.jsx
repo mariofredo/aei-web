@@ -18,6 +18,53 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
         industryClassification: data.industryClassification,
         subSector: data.subSector,
     });
+    console.log('formData', formData.ipoAdmissionDate);
+    const [assets, setAssets] = useState([]); // State to store company assets
+    const [industryClassification, setIndustryClassification] = useState([]); // State to store industry classification
+    useEffect(() => {
+        // Fetch asset data from the API
+        const fetchAssets = async () => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/select/company-asset`);
+                const data = await response.json();
+
+                console.log("Fetched asset data:", data); // Log the fetched data to the console
+
+                if (data.message === "success get data") {
+                    setAssets(data.data); // Set the fetched assets into state
+                } else {
+                    console.error('Failed to fetch assets data');
+                }
+            } catch (error) {
+                console.error('Error fetching assets:', error);
+            }
+        };
+
+        fetchAssets(); // Call the function to fetch data on component mount
+    }, []);
+
+    useEffect(() => {
+        // Fetch asset data from the API
+        const fetchIndustryClassification = async () => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/select/industry-classification`);
+                const data = await response.json();
+
+                console.log("Fetched asset data:", data); // Log the fetched data to the console
+
+                if (data.message === "success get data") {
+                    setIndustryClassification(data.data); // Set the fetched assets into state
+                } else {
+                    console.error('Failed to fetch assets data');
+                }
+            } catch (error) {
+                console.error('Error fetching assets:', error);
+            }
+        };
+
+        fetchIndustryClassification(); // Call the function to fetch data on component mount
+    }, []);
+    
     const handleNext = () => {
         if (step < 2) setStep(step + 1);
     };
@@ -26,11 +73,59 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
         if (step > 1) setStep(step - 1);
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = async () => {
+        // Ambil access_token dari cookies
+        const accessToken = Cookies.get('token'); // Ganti dengan nama cookie yang sesuai
+        
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/company/update-company`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+                if (response.ok) {
+                    alert('Form submitted successfully!');
+                    if (typeof window !== 'undefined'){
+                        Cookies.set('is_profile_completed', 'true', { expires: 7, path: '/' }); // Simpan status profil ke cookies
+                    }
+                    router.push("/"); // Redirect ke halaman home setelah submit
+                } else {
+                alert(data.message || 'Failed to submit data');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('Error submitting form. Please try again later.');
+        }
+    };
+
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan ditambahkan 1 karena indeks dimulai dari 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+
     if (!showEditProfilePopup) return null;
 
     return (
         <div className="modal_wrapper pic">
-            <div className="overlay" onClick={() => setShowEditPopup(false)}></div>
+            <div className="overlay" onClick={() => setShowEditProfilePopup(false)}></div>
             <div className="modal_box">
                 <div className="steps_box">
                     <div className={`step_number ${step >= 1 ? "active" : ""}`}>Company Data</div>
@@ -98,7 +193,7 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
                             <input
                                 type="date"
                                 name="ipoAdmissionDate"
-                                value={formData.ipoAdmissionDate}
+                                value={formatDate(formData.ipoAdmissionDate)}
                                 onChange={handleChange}
                                 required
                             />
