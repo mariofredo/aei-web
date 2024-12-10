@@ -111,13 +111,11 @@ export default function Register() {
     
             if (response.ok) {
                 // On success, reset the timer and disable resend button again
-                alert("OTP resent successfully!");
                 setTimer(30); // Reset the timer to 30 seconds
                 setResendDisabled(true); // Disable the button until the timer is finished
                 startTimer(); // Start the timer again
-    
                 // Optionally, show a success message (you can use a modal or toast)
-                alert("A new OTP has been sent to your email!");
+                alert("A new link has been sent to your email!");
             } else {
                 // Handle failure (invalid response or other errors)
                 console.error("Failed to resend OTP:", data.message);
@@ -191,7 +189,7 @@ export default function Register() {
                 </div>
             </div>
             {showPopup && (
-                <ModalVerificationCode timer={timer} resendDisabled={resendDisabled} handleResendOTP={handleResendOTP} />
+                <ModalVerificationCode timer={timer} resendDisabled={resendDisabled} handleResendOTP={handleResendOTP} email={email} />
             )}
         </div>
     );

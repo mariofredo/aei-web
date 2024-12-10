@@ -1,0 +1,26 @@
+.button_style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  
+    //styleName: ESG Button/ESG Button Medium;
+    font-family: 'Roobert PRO', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+  
+    &:hover {
+      transition: 1s ease;
+      opacity: 0.5;
+    }
+    &:disabled {
+      transition: 1s ease;
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: rgb(42, 44, 49) !important;
+    }
+  }
+  

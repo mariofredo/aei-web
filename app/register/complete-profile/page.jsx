@@ -312,7 +312,7 @@ export default function CompleteProfile(){
                     <div className="steps">
                         <div className="steps_box">
                             <div className={`step_number ${step >= 1 ? "active" : ""}`}>Company Data</div>
-                            <div className={`step_number ${step >= 2 ? "active" : ""}`}>Leaders</div>
+                            <div className={`step_number ${step >= 2 ? "active" : ""}`}>Executive</div>
                             <div className={`step_number ${step >= 3 ? "active" : ""}`}>About Company</div>
                             <div className={`step_number ${step >= 4 ? "active" : ""}`}>PIC</div>
                         </div>
@@ -407,7 +407,7 @@ export default function CompleteProfile(){
                                 <div className="leaders_wrapper">
                                     {formData.directors.map((leader, index) => (
                                         <div key={index} className="leaders_box">
-                                            <h5>Leader {index + 1}</h5>
+                                            <h5>Board of Executive {index + 1}</h5>
                                             <div className="form_box">
                                                 <span className="title">
                                                     Title<i>*</i>
@@ -442,7 +442,7 @@ export default function CompleteProfile(){
                                                     name={`directors-${index}-name`}
                                                     value={leader.name}
                                                     onChange={handleChange}
-                                                    placeholder="Leader's Name"
+                                                    placeholder="Executive's Name"
                                                 />
                                             </div>
                                             <div className="form_box">
@@ -454,7 +454,7 @@ export default function CompleteProfile(){
                                                     required
                                                 >
                                                     <option value="" disabled>
-                                                        Select Leader Position
+                                                        Select Executive Position
                                                     </option>
                                                     {directorsPosition.map((directorpos) => (
                                                         <option key={directorpos.id} value={directorpos.id}>
@@ -478,13 +478,13 @@ export default function CompleteProfile(){
                                                     className="remove_leader_btn"
                                                     onClick={() => removeLeader(index)}
                                                 >
-                                                    Remove Leader
+                                                    Remove
                                                 </button>
                                             )}
                                         </div>
                                     ))}
                                     <div className="add_leader_btn" onClick={addLeader}>
-                                        Add Leader
+                                        Add Executive
                                     </div>
                                 </div>
                             </div>

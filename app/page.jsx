@@ -200,7 +200,7 @@ export default function Home() {
                     <>
                         <div className="section_table_box">
                             <div className="stb_ctr">
-                                <h3>Leader</h3>
+                                <h3>Board of Executive</h3>
                                 <div className="add_more_btn" onClick={handleAddMoreLeaderClick}>Add More</div>
                             </div>
                             <table>

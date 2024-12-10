@@ -10,3 +10,4 @@ export * from './rightmenu';
 export * from './leftmenu';
 export * from './tradingView';
 export * from './card';
+export * from './button';
