@@ -49,24 +49,22 @@ export default function Login() {
         const {token, is_profile_completed, user} = loginData.data;
         const {type, email} = user;
 
-        // Simpan token ke Cookies
-        await new Promise((resolve) => {
-          Cookies.set('token', token, {expires: 7, path: '/'});
-          Cookies.set('is_profile_completed', is_profile_completed, {
-            expires: 7,
-            path: '/',
-          });
-          Cookies.set('type', type, {expires: 7, path: '/'});
-          Cookies.set('email', email, {expires: 7, path: '/'});
-          resolve();
+        Cookies.set('token', token, {expires: 7, path: '/'});
+        Cookies.set('is_profile_completed', is_profile_completed, {
+          expires: 7,
+          path: '/',
         });
-        if (is_profile_completed) {
-          // alert('Login successful!');
-          router.push('/');
-        } else {
-          // alert("Please complete your profile.");
-          router.push('/register/complete-profile');
-        }
+        Cookies.set('type', type, {expires: 7, path: '/'});
+        Cookies.set('email', email, {expires: 7, path: '/'});
+        setTimeout(() => {
+          if (is_profile_completed) {
+            // alert('Login successful!');
+            router.push('/');
+          } else {
+            // alert("Please complete your profile.");
+            router.push('/register/complete-profile');
+          }
+        }, 500);
       } else {
         alert(loginData.message || 'Failed to login.');
       }
