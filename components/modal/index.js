@@ -7,3 +7,4 @@ export {default as ModalLeader} from './modalLeader';
 export {default as ModalEditPic} from './modalEditPic';
 export {default as ModalEditLeader} from './modalEditLeader';
 export {default as ModalEditProfile} from './modalEditProfile';
+export {default as Modal} from './modal';
