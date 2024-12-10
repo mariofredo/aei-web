@@ -71,8 +71,9 @@ export default function Page() {
       );
       const data = await response.json();
       if (response.ok) {
-        setInvoiceDetails(data.data);
-        setCompanyDetails(data.data.company);
+        console.log(data);
+        // setInvoiceDetails(data.data);
+        // setCompanyDetails(data.data.company);
       } else {
         alert(data.message || 'Failed to fetch data');
       }

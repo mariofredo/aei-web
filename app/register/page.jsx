@@ -191,7 +191,7 @@ export default function Register() {
                 </div>
             </div>
             {showPopup && (
-                <ModalVerificationCode timer={timer} resendDisabled={resendDisabled} handleResendOTP={handleResendOTP} />
+                <ModalVerificationCode timer={timer} resendDisabled={resendDisabled} handleResendOTP={handleResendOTP} email={email} />
             )}
         </div>
     );
