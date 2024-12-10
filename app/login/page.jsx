@@ -57,11 +57,11 @@ export default function Login() {
     
                 // Cek status profil dan arahkan ke halaman yang sesuai
                 if (is_profile_completed) {
-                    alert("Login successful!");
-                    router.push("/"); // Redirect to the homepage
+                    // alert("Login successful!");
+                    router.push("/");
                 } else {
-                    alert("Please complete your profile.");
-                    router.push("/register/complete-profile"); // Redirect to profile completion page
+                    // alert("Please complete your profile.");
+                    router.push("/register/complete-profile");
                 }
             } else {
                 alert(loginData.message || "Failed to login.");

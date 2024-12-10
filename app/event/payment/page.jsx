@@ -2,7 +2,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
-import {FiPlusCircle, FiTrash} from 'react-icons/fi';
+import {FiPlusCircle} from 'react-icons/fi';
 import {LuCircleMinus} from 'react-icons/lu';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components';
@@ -15,8 +15,10 @@ export default function Page() {
     {type: '', name: '', position: '', mobile: '', email: '', pic: ''},
   ]);
   const searchParams = useSearchParams();
-  const invoiceCode = searchParams.get('invoiceCode');
-  const [step, setStep] = useState(2);
+  const slug = searchParams.get('slug');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [step, setStep] = useState(1);
   const [confirmedBank, setConfirmedBank] = useState('');
   const [companyDetails, setCompanyDetails] = useState(null);
   const [invoiceDetails, setInvoiceDetails] = useState(null);
@@ -24,6 +26,7 @@ export default function Page() {
   const [accountNumber, setAccountNumber] = useState('');
   const [accountName, setAccountName] = useState('');
   const [paymentProof, setPaymentProof] = useState(null);
+  const [paymentProofName, setPaymentProofName] = useState('');
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('id-ID', {
@@ -56,38 +59,57 @@ export default function Page() {
   const picOptions = ['John Doe', 'Jane Smith', 'Michael Johnson'];
   const positionOptions = ['Manager', 'Developer', 'Designer', 'Intern'];
 
+  const handleGetDetail = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/event/${slug}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setInvoiceDetails(data.data);
+        setCompanyDetails(data.data.company);
+      } else {
+        alert(data.message || 'Failed to fetch data');
+      }
+    } catch (err) {
+      console.error('An error occurred:', err);
+    }
+  }, [slug]);
+
+  useEffect(() => {
+    handleGetDetail();
+  }, [handleGetDetail]);
+
   const handlePaymentConfirmation = async () => {
     let formError = {};
 
-    // Validasi untuk bank BCA
     if (confirmedBank === 'BCA') {
       if (!accountNumber)
         formError.accountNumber = 'Account number is required';
       if (!accountName) formError.accountName = 'Account name is required';
-    }
-
-    // Validasi untuk bank Mandiri
-    else if (confirmedBank === 'Mandiri') {
+    } else if (confirmedBank === 'Mandiri') {
       if (!paymentProof) formError.paymentProof = 'Payment proof is required';
     }
 
-    // Jika ada error pada form
     if (Object.keys(formError).length > 0) {
       setError(formError);
       return;
     }
 
-    // Menyiapkan FormData
     const formData = new FormData();
     formData.append('paymentMethod', confirmedBank);
-    formData.append('file', paymentProof); // Menambahkan file ke formData
+    formData.append('file', paymentProof);
     formData.append('accountNumber', accountNumber);
     formData.append('accountName', accountName);
 
     try {
-      // Mengirim data menggunakan fetch
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/company-invoice/${invoiceCode}/payment`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/company-invoice/${slug}/payment`,
         {
           method: 'POST',
           headers: {
@@ -108,6 +130,148 @@ export default function Page() {
     } catch (err) {
       console.error(err);
       alert('Error confirming payment');
+    }
+  };
+
+  const formatCurrencyCopy = (value) => {
+    // Format angka tanpa simbol "Rp" dan tanpa pemisah ribuan
+    return new Intl.NumberFormat('id-ID', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+      .format(value)
+      .replace(/[^\d]/g, ''); // Menghapus karakter non-numerik
+  };
+
+  const handleCopy = (e) => {
+    // Mengambil elemen <span> sebelumnya terkait tombol yang diklik
+    const value = e.target.previousElementSibling.dataset.value;
+    // Menghapus simbol "Rp" dan tanda pemisah ribuan (titik)
+    const numericValue = value.replace(/[^\d]/g, ''); // Menghapus segala karakter non-numerik selain angka
+
+    navigator.clipboard
+      .writeText(numericValue)
+      .then(() => {
+        alert('Berhasil menyalin: ' + numericValue);
+      })
+      .catch((err) => {
+        alert('Gagal menyalin teks.');
+        console.error(err);
+      });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Mendapatkan file pertama yang dipilih
+    setPaymentProof(file);
+    setPaymentProofName(file ? file.name : 'No file selected'); // Menyimpan nama file
+  };
+
+  const additionalContent = () => {
+    switch (confirmedBank) {
+      case 'BCA':
+        return (
+          <>
+            <div className="section_info_payment">
+              <div className="sip_box">
+                <h5>Total Payment</h5>
+                <span
+                  data-value={formatCurrencyCopy(
+                    parseFloat(invoiceDetails?.totalAmount)
+                  )}
+                >
+                  {formatCurrency(parseFloat(invoiceDetails?.totalAmount))}
+                </span>
+                <div className="copy_btn" onClick={handleCopy}></div>
+              </div>
+              <div className="sip_box">
+                <h5>Bank and Account number</h5>
+                <span data-value={1412314123}>1412314123</span>
+                <div className="copy_btn" onClick={handleCopy}></div>
+              </div>
+              <div className="sip_box">
+                <h5>Bank</h5>
+                <span>Bank Central Asia</span>
+                <Image src={BCA} alt="Bank Mandiri" width={75} height={27} />
+              </div>
+              <div className="sip_box">
+                <h5>Account Name</h5>
+                <span>Asosiasi Emiten Indonesia</span>
+              </div>
+            </div>
+            <div className="upload_box">
+              <h5>
+                Please upload your proof of payment in the form below to confirm
+                the payment
+              </h5>
+              <div className="upload_btn">
+                <input
+                  type="file"
+                  onChange={handleFileChange} // Panggil handleFileChange ketika file dipilih
+                />
+                <span>
+                  {paymentProofName || 'Choose pdf file JPG, PNG, or PDF'}
+                </span>{' '}
+              </div>
+              <span className="info">File size max 5Mb</span>
+            </div>
+          </>
+        );
+      case 'Mandiri':
+        return (
+          <>
+            <div className="section_info_payment">
+              <div className="sip_box">
+                <h5>Total Payment</h5>
+                <span
+                  data-value={formatCurrencyCopy(
+                    parseFloat(invoiceDetails?.totalAmount)
+                  )}
+                >
+                  {formatCurrency(parseFloat(invoiceDetails?.totalAmount))}
+                </span>
+                <div className="copy_btn"></div>
+              </div>
+              <div className="sip_box">
+                <h5>Bank and Account number</h5>
+                <span data-value={1412314123}>1412314123</span>
+                <div className="copy_btn"></div>
+              </div>
+              <div className="sip_box">
+                <h5>Bank</h5>
+                <span>Bank Mandiri</span>
+                <Image
+                  src={Mandiri}
+                  alt="Bank Mandiri"
+                  width={100}
+                  height={27}
+                />
+              </div>
+              <div className="sip_box">
+                <h5>Account Name</h5>
+                <span>Asosiasi Emiten Indonesia</span>
+              </div>
+            </div>
+            <div className="upload_box">
+              <h5>
+                Please upload your proof of payment in the form below to confirm
+                the payment
+              </h5>
+              <div className="upload_btn">
+                <input
+                  type="file"
+                  onChange={handleFileChange} // Panggil handleFileChange ketika file dipilih
+                />
+                <span>
+                  {paymentProofName || 'Choose pdf file JPG, PNG, or PDF'}
+                </span>{' '}
+                {/* Menampilkan nama file atau pesan default */}
+              </div>
+              <span className="info">File size max 5Mb</span>
+            </div>
+          </>
+        );
+      default:
+        return null;
     }
   };
 
@@ -302,26 +466,17 @@ export default function Page() {
             {!confirmedBank ? (
               <>
                 <h4>Payment form</h4>
-                <h3>{companyDetails?.companyName || 'NUll'}</h3>
-                <span className="stock_name">
-                  STOCK CODE:{' '}
-                  <span className="blue_text">
-                    {companyDetails?.stockCode || 'BBCA'}
-                  </span>
-                </span>
-                <div className="section_benefit">
-                  <ul>
-                    <li>Get access to all feature</li>
-                    <li>Get history of company seminar</li>
-                    <li>Get sertificate from the best seminar</li>
-                    <li>Get access to all feature</li>
-                  </ul>
+                <div className="section_info">
+                  Seminar penyusunan sustainability report berbasis GRI standard
+                  & IFRS
+                </div>
+                <div className="section_price">
+                  <span style={{color: '#332C2B'}}>4 Participant</span>
                 </div>
                 <div className="section_price">
                   <strong>
                     {formatCurrency(parseFloat(invoiceDetails?.totalAmount))}
                   </strong>
-                  <span>for 1 year membership</span>
                 </div>
                 <div className="bank_payment">
                   <h5>Choose Payment</h5>
@@ -406,12 +561,12 @@ export default function Page() {
   }, [step, participants, picOptions, positionOptions]);
 
   useEffect(() => {
-    if (!invoiceCode) return; // Wait until invoiceCode is available
+    if (!slug) return; // Wait until slug is available
 
     const fetchInvoiceDetails = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/company-invoice/${invoiceCode}`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/company-invoice/${slug}`,
           {
             method: 'GET',
             headers: {
@@ -439,7 +594,7 @@ export default function Page() {
     };
 
     fetchInvoiceDetails();
-  }, [invoiceCode]);
+  }, [slug]);
 
   return (
     <div className="ep_ctr">
