@@ -10,7 +10,6 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [agreement, setAgreement] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false); // Untuk popup
   const [resendDisabled, setResendDisabled] = useState(true); // Menonaktifkan tombol resend awalnya
@@ -39,7 +38,7 @@ export default function Register() {
       return;
     }
 
-    if (!agreement) {
+    if (!agreeOnTerms) {
       alert('You must agree to the terms and conditions.');
       return;
     }
