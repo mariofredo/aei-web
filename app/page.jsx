@@ -279,9 +279,7 @@ export default function Home() {
                           {leaderData.length > 1 && (
                             <div
                               className="delete_btn"
-                              onClick={() =>
-                                handleDeleteLeaderClick(item.id)
-                              }
+                              onClick={() => handleDeleteLeaderClick(item.id)}
                             >
                               Delete
                             </div>
@@ -433,9 +431,9 @@ export default function Home() {
       {/* {showEditPsrofilePopup && ( */}
       <ModalEditProfile
         data={companyData}
+        setCompanyData={setCompanyData}
         showEditProfilePopup={showEditProfilePopup}
         setShowEditProfilePopup={setShowEditProfilePopup}
-        setCompanyData={setCompanyData}
       />
       {/* )} */}
     </>
