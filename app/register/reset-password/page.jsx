@@ -74,7 +74,7 @@ function ResetPassword() {
     }
 
     return (
-        <div className="section_complete_profiles">
+        <div className="section_complete_profile">
             <div className="container">
                 {!isResetSuccessful ? (
                     <div className="scp_box">
