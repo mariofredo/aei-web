@@ -51,21 +51,19 @@ export default function Login() {
         const {email} = user;
 
         // Simpan token ke Cookies
-        await Cookies.set('token', token, {expires: 7, path: '/'});
-        await Cookies.set('is_profile_completed', is_profile_completed, {
+        Cookies.set('token', token, {expires: 7, path: '/'});
+        Cookies.set('is_profile_completed', is_profile_completed, {
           expires: 7,
           path: '/',
         });
-        await Cookies.set('type', type, {expires: 7, path: '/'});
-        await Cookies.set('email', email, {expires: 7, path: '/'});
+        Cookies.set('type', type, {expires: 7, path: '/'});
+        Cookies.set('email', email, {expires: 7, path: '/'});
         console.log(is_profile_completed, 'is_complete');
         // Simpan token ke localStorage
         // Cek status profil dan arahkan ke halaman yang sesuai
         if (is_profile_completed) {
           // alert("Login successful!");
-          console.log('test 1');
           router.push('/');
-          console.log('test 2');
         } else {
           // alert("Please complete your profile.");
           router.push('/register/complete-profile');
@@ -82,28 +80,28 @@ export default function Login() {
   };
 
   return (
-    <div className="section_login">
-      <div className="container">
-        <div className="banner_slider">
+    <div className='section_login'>
+      <div className='container'>
+        <div className='banner_slider'>
           <SlickSlider />
         </div>
-        <div className="section_form">
-          <div className="sf_box">
+        <div className='section_form'>
+          <div className='sf_box'>
             <h3>
               <span>Login</span> Your Account
             </h3>
-            <div className="form_box">
+            <div className='form_box'>
               <input
-                type="email"
-                placeholder="Email"
+                type='email'
+                placeholder='Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="form_box">
+            <div className='form_box'>
               <input
                 type={showPassword ? 'text' : 'password'} // Ubah tipe berdasarkan state
-                placeholder="Password"
+                placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -112,24 +110,24 @@ export default function Login() {
                 onClick={togglePasswordVisibility}
               ></div>
             </div>
-            <div className="form_box">
-              <div className="remember_box">
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember">Remember me</label>
+            <div className='form_box'>
+              <div className='remember_box'>
+                <input type='checkbox' id='remember' />
+                <label htmlFor='remember'>Remember me</label>
               </div>
-              <Link className="forgot_password" href="#">
+              <Link className='forgot_password' href='#'>
                 Forgot Password?
               </Link>
             </div>
-            <div className="button_wrapper">
+            <div className='button_wrapper'>
               <button
-                className="green_btn"
+                className='green_btn'
                 onClick={handleLogin}
                 disabled={loading}
               >
                 {loading ? 'Logging in...' : 'Login'}
               </button>
-              <Link className="create_acc_btn" href="/register">
+              <Link className='create_acc_btn' href='/register'>
                 Create Account
               </Link>
             </div>
