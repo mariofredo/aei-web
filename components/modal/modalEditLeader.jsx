@@ -132,7 +132,7 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Leader's Name"
+                        placeholder="Executive's Name"
                     />
                 </div>
                 <div className="form_box">

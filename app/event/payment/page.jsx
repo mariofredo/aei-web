@@ -86,6 +86,10 @@ export default function Page() {
     slug && handleGetDetail();
   }, [slug]);
 
+  const handleJoinEvent = useCallback(async()=>{
+
+  },[])
+
   const handlePaymentConfirmation = async () => {
     let formError = {};
 
