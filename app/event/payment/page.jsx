@@ -454,7 +454,7 @@ export default function Page() {
                 borderRadius="8px"
                 width="160px"
                 onClick={() => {
-                  router.push('/dashboard/category/form');
+                  setStep(2);
                 }}
               />
             </div>

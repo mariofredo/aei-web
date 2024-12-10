@@ -51,15 +51,13 @@ export default function Login() {
         const {email} = user;
 
         // Simpan token ke Cookies
-        if (typeof window !== 'undefined') {
-          Cookies.set('token', token, {expires: 7, path: '/'});
-          Cookies.set('is_profile_completed', is_profile_completed, {
-            expires: 7,
-            path: '/',
-          });
-          Cookies.set('type', type, {expires: 7, path: '/'});
-          Cookies.set('email', email, {expires: 7, path: '/'});
-        }
+        Cookies.set('token', token, {expires: 7, path: '/'});
+        Cookies.set('is_profile_completed', is_profile_completed, {
+          expires: 7,
+          path: '/',
+        });
+        Cookies.set('type', type, {expires: 7, path: '/'});
+        Cookies.set('email', email, {expires: 7, path: '/'});
         console.log(is_profile_completed, 'is_complete');
         // Simpan token ke localStorage
         // Cek status profil dan arahkan ke halaman yang sesuai
