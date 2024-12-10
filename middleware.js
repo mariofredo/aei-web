@@ -1,17 +1,16 @@
 import {NextResponse} from 'next/server';
-export function middleware(req) {
+import {cookies} from 'next/headers';
+export async function middleware(req) {
   const token = req.cookies.get('token')?.value; // Ambil token dari cookies
   const isProfileCompleted = req.cookies.get('is_profile_completed')?.value; // Ambil value
   const {pathname} = req.nextUrl; // Path saat ini
-
   console.log(token, 'token');
-  // Jika tidak ada token
+  const cookiesStore = await cookies();
+  console.log(cookiesStore.get('token')?.value, 'cookiesStore token');
   if (!token && pathname !== '/login' && pathname !== '/register') {
     console.log('No token found, redirecting to /login');
     return NextResponse.redirect(new URL('/login', req.url));
   }
-
-  // Jika token ditemukan
 
   if (token) {
     // Cek apakah profil belum selesai
