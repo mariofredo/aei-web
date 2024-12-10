@@ -47,22 +47,21 @@ export default function Login() {
 
       if (loginResponse.ok) {
         const {token, is_profile_completed, user} = loginData.data;
-        const {type} = user;
-        const {email} = user;
+        const {type, email} = user;
 
         // Simpan token ke Cookies
-        Cookies.set('token', token, {expires: 7, path: '/'});
-        Cookies.set('is_profile_completed', is_profile_completed, {
-          expires: 7,
-          path: '/',
+        await new Promise((resolve) => {
+          Cookies.set('token', token, {expires: 7, path: '/'});
+          Cookies.set('is_profile_completed', is_profile_completed, {
+            expires: 7,
+            path: '/',
+          });
+          Cookies.set('type', type, {expires: 7, path: '/'});
+          Cookies.set('email', email, {expires: 7, path: '/'});
+          resolve();
         });
-        Cookies.set('type', type, {expires: 7, path: '/'});
-        Cookies.set('email', email, {expires: 7, path: '/'});
-        console.log(is_profile_completed, 'is_complete');
-        // Simpan token ke localStorage
-        // Cek status profil dan arahkan ke halaman yang sesuai
         if (is_profile_completed) {
-          // alert("Login successful!");
+          // alert('Login successful!');
           router.push('/');
         } else {
           // alert("Please complete your profile.");
