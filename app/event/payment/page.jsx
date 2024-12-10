@@ -146,7 +146,7 @@ export default function Page() {
           );
           formData.append(`participants[${index}][email]`, participant.email);
           formData.append(
-            `participants[${index}][phoneNumber]`,
+            `participants[${index}][mobileNumber]`,
             participant.mobile
           );
         }
@@ -154,7 +154,7 @@ export default function Page() {
 
       // Add payment proof if available
       if (paymentProof) {
-        formData.append('paymentProof', paymentProof);
+        formData.append('file', paymentProof);
       }
 
       // Make API call
@@ -172,7 +172,7 @@ export default function Page() {
       const data = await response.json();
       if (response.ok) {
         alert(data.message || 'Successfully submitted');
-        router.push('/event');
+        router.back();
       } else {
         alert(data.message || 'Failed to submit');
       }
