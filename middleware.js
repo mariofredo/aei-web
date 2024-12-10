@@ -1,10 +1,10 @@
 import {NextResponse} from 'next/server';
-
 export function middleware(req) {
   const token = req.cookies.get('token')?.value; // Ambil token dari cookies
   const isProfileCompleted = req.cookies.get('is_profile_completed')?.value; // Ambil value
   const {pathname} = req.nextUrl; // Path saat ini
 
+  console.log(token, 'token');
   // Jika tidak ada token
   if (!token && pathname !== '/login' && pathname !== '/register') {
     console.log('No token found, redirecting to /login');
