@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server';
 
 export function middleware(req) {
-  const token = req.cookies.get('token'); // Ambil token dari cookies
+  const token = req.cookies.get('token')?.value; // Ambil token dari cookies
   const isProfileCompleted = req.cookies.get('is_profile_completed')?.value; // Ambil value
   const {pathname} = req.nextUrl; // Path saat ini
 
@@ -12,9 +12,8 @@ export function middleware(req) {
   }
 
   // Jika token ditemukan
+
   if (token) {
-    console.log(isProfileCompleted);
-    console.log(typeof isProfileCompleted);
     // Cek apakah profil belum selesai
     if (
       isProfileCompleted === 'false' &&
