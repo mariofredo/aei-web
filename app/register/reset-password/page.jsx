@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, useRef, Suspense } from 'react';
-import '../../styles/resetPassword.scss';
+import '../../styles/completeProfile.scss';
 
 function ResetPassword() {
     const searchParams = useSearchParams();
