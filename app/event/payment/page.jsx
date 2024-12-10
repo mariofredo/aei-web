@@ -82,8 +82,8 @@ export default function Page() {
   }, [slug]);
 
   useEffect(() => {
-    handleGetDetail();
-  }, [handleGetDetail]);
+    slug && handleGetDetail();
+  }, [slug]);
 
   const handlePaymentConfirmation = async () => {
     let formError = {};
