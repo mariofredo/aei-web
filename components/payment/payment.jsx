@@ -60,8 +60,9 @@ function Payment() {
     
         // Validasi untuk bank BCA
         if (confirmedBank === "BCA") {
-            if (!accountNumber) formError.accountNumber = "Account number is required";
-            if (!accountName) formError.accountName = "Account name is required";
+            // if (!accountNumber) formError.accountNumber = "Account number is required";
+            // if (!accountName) formError.accountName = "Account name is required";
+            if (!paymentProof) formError.paymentProof = "Payment proof is required";
         }
         
         // Validasi untuk bank Mandiri
@@ -172,7 +173,7 @@ function Payment() {
                                 <span>Asosiasi Emiten Indonesia</span>
                             </div>
                         </div>
-                        <div className="confirm_payment">
+                        {/* <div className="confirm_payment">
                             <h5>Please fill the form below to confirm the payment</h5>
                             <div className="form_box">
                                 <span>Account Number<i>*</i></span>
@@ -190,6 +191,18 @@ function Payment() {
                                     onChange={(e) => setAccountName(e.target.value)}
                                 />
                             </div>
+                        </div> */}
+                        <div className="upload_box">
+                            <h5>Please upload your proof of payment in the form below to confirm the payment</h5>
+                            <div className="upload_btn">
+                            <input
+                                type="file"
+                                onChange={handleFileChange} // Panggil handleFileChange ketika file dipilih
+                            />
+                            <span>{paymentProofName || "Choose pdf file JPG, PNG, or PDF"}</span> {/* Menampilkan nama file atau pesan default */}
+
+                            </div>
+                            <span className="info">File size max 5Mb</span>
                         </div>
                     </>
                 )

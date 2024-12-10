@@ -4,23 +4,20 @@ import { useCompanyData } from '@/hooks';
 import Link from 'next/link';
 import '../../styles/rightMenu.scss';
 import { ModalEditProfile, ModalRegistrationForm } from '../modal';
-export default function RightMenu({companyName, stockCode, listingDate, admissionDate, companyWeb, companyEmail, children, status, onTabClick, activeTab, setCompanyData}) {
-    const [showPopup, setShowPopup] = useState(false);  
-    const [editProfilePopupData, setEditProfilePopupData] = useState(null); // Data untuk form edit
-    const [showEditProfilePopup, setShowEditProfilePopup] = useState(false); // Status popup
-
-    const handleEditProfilePopup = async (data) => {
-        setEditProfilePopupData(data);
+export default function RightMenu({companyName, stockCode, listingDate, admissionDate, companyWeb, companyEmail, children, status, onTabClick, activeTab, setCompanyData, companyData, setShowEditProfilePopup}) {
+    const [showPopup, setShowPopup] = useState(false);
+    const handleEditProfilePopup = async () => {
+        //setEditProfilePopupData(data);
+        console.log('test');
         setShowEditProfilePopup(true);
     }
-    
     return(
         <>
         <div className="section_right_menu">
             <div className="section_top_menu">
                 <div className="section_company_name">
                     <h2>{companyName}</h2>
-                    <span className="edit_profile_btn" onClick={() => handleEditProfilePopup(companyData)}>Edit Profile</span>
+                    <span className="edit_profile_btn" onClick={() => handleEditProfilePopup()}>Edit Profile</span>
                 </div>
                 <div className="section_company_stock_code">
                     <h5>Stock Code:</h5>
@@ -76,9 +73,6 @@ export default function RightMenu({companyName, stockCode, listingDate, admissio
 
         {showPopup && (
             <ModalRegistrationForm setCompanyData={setCompanyData} showPopup={showPopup} setShowPopup={setShowPopup} />
-        )}
-        {showEditProfilePopup && (
-            <ModalEditProfile setCompanyData={setCompanyData} showEditProfilePopup={showEditProfilePopup} setShowEditProfilePopup={setShowEditProfilePopup} />
         )}
         </>
     )

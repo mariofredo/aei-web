@@ -1,6 +1,6 @@
 'use client';
 import { useCompanyData, usePicData, useLeaderData, useUpcomingData, useHistoryData, useInvoicesData } from "@/hooks";
-import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget, CardEvent, ModalChangePassword, ModalPic, ModalLeader, ModalEditPic, ModalEditLeader } from "@/components";
+import { CoverImage, ModalRegistrationSuccess, LeftMenu, RightMenu, TradingViewWidget, CardEvent, ModalChangePassword, ModalPic, ModalLeader, ModalEditPic, ModalEditLeader, ModalEditProfile } from "@/components";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import Link from "next/link";
@@ -13,6 +13,8 @@ export default function Home() {
     const [showEditPopup, setShowEditPopup] = useState(false); // Status popup
     const [editLeaderPopupData, setEditLeaderPopupData] = useState(null); // Data untuk form edit
     const [showEditLeaderPopup, setShowEditLeaderPopup] = useState(false); // Status popup
+    // const [editProfilePopupData, setEditProfilePopupData] = useState(null); // Data untuk form edit
+    const [showEditProfilePopup, setShowEditProfilePopup] = useState(false); // Status popup
     const [selectedId, setSelectedId] = useState(null);
     const { companyData, setCompanyData, loading } = useCompanyData();
     const { picData, type, email, deletePicData, setPicData, editPicData } = usePicData();
@@ -50,10 +52,6 @@ export default function Home() {
         setShowEditLeaderPopup(true); // Tampilkan popup
     };
 
-    const handleEditProfileClick = async (data) => {
-        setEditProfilePopupData(data); // Set data untuk form edit
-        setShowEditProfilePopup(true); // Tampilkan popup
-    }
     const handleDeleteClick = (id) => {
         if (confirm("Are you sure you want to delete this PIC?")) {
             deletePicData(id);
@@ -65,6 +63,9 @@ export default function Home() {
         }
     };
     
+    useEffect(() => {
+        console.log(showEditProfilePopup, 'showEditProfilePopup')
+    }, [showEditProfilePopup]);
 
     if (loading) {
         return <div className="loader center"></div>;
@@ -297,6 +298,7 @@ export default function Home() {
                     onTabClick={setActiveTab}
                     activeTab={activeTab}
                     setCompanyData={setCompanyData}
+                    setShowEditProfilePopup={setShowEditProfilePopup}
                 >
                 {renderContent()}
                 </RightMenu>
@@ -338,6 +340,9 @@ export default function Home() {
             data={editLeaderPopupData}
             />
         )}
+        {/* {showEditPsrofilePopup && ( */}
+            <ModalEditProfile data={companyData} showEditProfilePopup={showEditProfilePopup} setShowEditProfilePopup={setShowEditProfilePopup} setCompanyData={setCompanyData} />
+        {/* )} */}
         </>
     );
 }
