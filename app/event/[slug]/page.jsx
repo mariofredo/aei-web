@@ -88,7 +88,7 @@ export default function EventDetail({params}) {
           <div className="sedt_right">
             <div className="sedt_info">
               <h5>Open Registration until</h5>
-              <span>{formatDate(event.scheduleStart)}</span>
+              <span>{formatDate(event.registrationEnd)}</span>
               <h5>Remaining Quota</h5>
               <span>{data.remainingQuota} participants</span>
             </div>
@@ -121,7 +121,11 @@ export default function EventDetail({params}) {
             {activeEventTab === 'description' && (
               <div className="desc_box">
                 <div className="desc_left">
-                  <p>{event.description}</p>
+                  <p>
+                    <pre style={{whiteSpace: 'break-spaces', width: '100%'}}>
+                      {event.description}
+                    </pre>
+                  </p>
                 </div>
                 <div className="desc_right">
                   <div className="dr_box">

@@ -158,7 +158,7 @@ export default function Register() {
                         <div className="form_box">
                             <input
                                 type={showConfirmPassword ? "text" : "password"}
-                                placeholder="Confirmation Password"
+                                placeholder="Password Confirmation"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />

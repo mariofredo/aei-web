@@ -77,12 +77,12 @@ export default function useLeadercData() {
                 throw new Error("Failed to delete Leader data");
             }
     
-            console.log(`Leader with ID ${id} deleted successfully`);
+            console.log(`Executive with ID ${id} deleted successfully`);
     
             // Optionally, refresh the data after deletion
             fetchLeaderData();
         } catch (error) {
-            console.error(`Error deleting Pic data with ID ${id}:`, error);
+            console.error(`Error deleting Executive data with ID ${id}:`, error);
         }
     };
     const editLeaderData = async (id, updatedLeader) => {
