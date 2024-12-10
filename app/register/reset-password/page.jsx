@@ -38,7 +38,7 @@ function ResetPassword() {
         }
 
         try {
-            const response = await fetch('{{base_url}}/auth/reset-password', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,10 +74,10 @@ function ResetPassword() {
     }
 
     return (
-        <div className="section_reset_password">
+        <div className="section_complete_profiles">
             <div className="container">
                 {!isResetSuccessful ? (
-                    <div className="reset_box">
+                    <div className="scp_box">
                         <h2>Reset Password</h2>
                         <div className="form_box">
                             <span>New Password</span>
@@ -120,7 +120,7 @@ function ResetPassword() {
                         </div>
                     </div>
                 ) : (
-                    <div className="reset_box">
+                    <div className="scp_box">
                         <h2>Password Reset Successful</h2>
                         <p>Your password has been successfully reset.</p>
                         <div className="button_wrapper">
