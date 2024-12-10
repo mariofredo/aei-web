@@ -107,7 +107,7 @@ export default function ModalLeader({ setShowPopupLeader, setLeaderData }) {
                 <div className="leaders_wrapper">
                     {formData.leaders.map((leader, index) => (
                         <div key={index} className="leaders_box">
-                            <h5>Leader {index + 1 + (leaderData?.length ?? 0)}</h5>
+                            <h5>Board of Executive {index + 1 + (leaderData?.length ?? 0)}</h5>
                             <div className="form_box">
                                 <span className="title">
                                     Title<i>*</i>

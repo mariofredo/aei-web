@@ -127,7 +127,7 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
                     </div>
                 </div>
                 <div className="form_box">
-                    <span className="title">Leader Name<i>*</i></span>
+                    <span className="title">Board of Executive Name<i>*</i></span>
                     <input
                         type="text"
                         value={name}
