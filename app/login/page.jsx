@@ -56,15 +56,14 @@ export default function Login() {
         });
         Cookies.set('type', type, {expires: 7, path: '/'});
         Cookies.set('email', email, {expires: 7, path: '/'});
-        setTimeout(() => {
-          if (is_profile_completed) {
-            // alert('Login successful!');
+        if (is_profile_completed) {
+          if (Cookies.get('token')) {
+            console.log('Token:', Cookies.get('token'));
             router.push('/');
-          } else {
-            // alert("Please complete your profile.");
-            router.push('/register/complete-profile');
           }
-        }, 500);
+        } else {
+          router.push('/register/complete-profile');
+        }
       } else {
         alert(loginData.message || 'Failed to login.');
       }
