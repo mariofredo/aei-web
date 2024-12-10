@@ -35,7 +35,7 @@ export default function useCompanyData() {
                 data.data.ipoAdmissionDate = formatDate(data.data.ipoAdmissionDate);
             }
             setCompanyData(data.data);
-            console.log("Company data fetched:", data);
+            return data.data;
         } catch (error) {
             console.error("Error fetching company data:", error);
         } finally {
@@ -54,5 +54,5 @@ export default function useCompanyData() {
         return `${day} ${month} ${year}`;
     };
 
-    return { companyData, setCompanyData, loading };
+    return { companyData, setCompanyData, fetchCompanyData, loading };
 }

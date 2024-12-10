@@ -370,6 +370,7 @@ export default function CompleteProfile(){
                                         placeholder='Your Stock Code'
                                         value={formData.stockCode}
                                         onChange={handleChange}
+                                        style={{ textTransform: 'uppercase' }}
                                         required
                                     />
                                 </div>

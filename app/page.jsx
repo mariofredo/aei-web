@@ -341,7 +341,7 @@ export default function Home() {
             />
         )}
         {/* {showEditPsrofilePopup && ( */}
-            <ModalEditProfile data={companyData} showEditProfilePopup={showEditProfilePopup} setShowEditProfilePopup={setShowEditProfilePopup} setCompanyData={setCompanyData} />
+            <ModalEditProfile data={companyData} setCompanyData={setCompanyData} showEditProfilePopup={showEditProfilePopup} setShowEditProfilePopup={setShowEditProfilePopup} />
         {/* )} */}
         </>
     );

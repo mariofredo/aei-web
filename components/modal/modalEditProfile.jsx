@@ -1,8 +1,10 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
+import { useCompanyData } from '@/hooks';
 import Cookies from 'js-cookie';
 
-export default function ModalEditProfile({ showEditProfilePopup, setShowEditProfilePopup, data }) {
+export default function ModalEditProfile({ showEditProfilePopup, setShowEditProfilePopup, data, setCompanyData }) {
+    const { fetchCompanyData } = useCompanyData();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         email: data.email,
@@ -11,16 +13,33 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
         website: data.website,
         stockCode: data.stockCode,
         ipoAdmissionDate: data.ipoAdmissionDate,
-        asset: data.asset,
+        assetId: data.assetId,
         headquarterAddress: data.headquarterAddress,
         managementOfficeAddress: data.managementOfficeAddress,
         about: data.about,
-        industryClassification: data.industryClassification,
+        industryClassificationId: data.industryClassificationId,
         subSector: data.subSector,
     });
-    console.log('formData', formData.ipoAdmissionDate);
     const [assets, setAssets] = useState([]); // State to store company assets
     const [industryClassification, setIndustryClassification] = useState([]); // State to store industry classification
+
+    useEffect(() => {
+        setFormData({
+            email: data.email,
+            officePhone: data.officePhone,
+            companyName: data.companyName,
+            website: data.website,
+            stockCode: data.stockCode,
+            ipoAdmissionDate: data.ipoAdmissionDate,
+            assetId: data.assetId,
+            headquarterAddress: data.headquarterAddress,
+            managementOfficeAddress: data.managementOfficeAddress,
+            about: data.about,
+            industryClassificationId: data.industryClassificationId,
+            subSector: data.subSector,
+        });
+        console.log('Data:', data);
+    }, [data]);
     useEffect(() => {
         // Fetch asset data from the API
         const fetchAssets = async () => {
@@ -52,8 +71,9 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
 
                 console.log("Fetched asset data:", data); // Log the fetched data to the console
 
-                if (data.message === "success get data") {
+                if (response.ok) {
                     setIndustryClassification(data.data); // Set the fetched assets into state
+                    console.log(data.data);
                 } else {
                     console.error('Failed to fetch assets data');
                 }
@@ -97,14 +117,13 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
 
             const data = await response.json();
 
-                if (response.ok) {
-                    alert('Form submitted successfully!');
-                    if (typeof window !== 'undefined'){
-                        Cookies.set('is_profile_completed', 'true', { expires: 7, path: '/' }); // Simpan status profil ke cookies
-                    }
-                    router.push("/"); // Redirect ke halaman home setelah submit
-                } else {
-                alert(data.message || 'Failed to submit data');
+            if (response.ok) {
+                alert('Form submitted successfully!');
+                setShowEditProfilePopup(false);
+                const result = await fetchCompanyData();
+                setCompanyData(result);
+            } else {
+            alert(data.message || 'Failed to submit data');
             }
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -117,9 +136,8 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan ditambahkan 1 karena indeks dimulai dari 0
         const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+        return `${year}-${month}-${day}`;
     };
-
 
     if (!showEditProfilePopup) return null;
 
@@ -185,6 +203,7 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
                                 placeholder='Your Stock Code'
                                 value={formData.stockCode}
                                 onChange={handleChange}
+                                style={{ textTransform: 'uppercase' }}
                                 required
                             />
                         </div>
@@ -201,8 +220,8 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
                         <div className="form_box">
                             <span className="title">Total Asset<i>*</i></span>
                             <select
-                                name="asset"
-                                value={formData.asset}
+                                name="assetId"
+                                value={formData.assetId}
                                 onChange={handleChange}
                                 required
                             >
@@ -251,8 +270,8 @@ export default function ModalEditProfile({ showEditProfilePopup, setShowEditProf
                         <div className="form_box">
                             <span className="title">Industry Classification<i>*</i></span>
                             <select
-                                name="industryClassification"
-                                value={formData.industryClassification}
+                                name="industryClassificationId"
+                                value={formData.industryClassificationId}
                                 onChange={handleChange}
                                 required
                             >
