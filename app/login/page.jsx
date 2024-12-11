@@ -56,11 +56,11 @@ export default function Login() {
         Cookies.set('type', type, {expires: 7, path: '/'});
         Cookies.set('email', email, {expires: 7, path: '/'});
         if (is_profile_completed) {
-          // router.push('/');
-          window.location.href = '/';
+          router.push('/');
+          // window.location.href = '/';
         } else {
-          // router.push('/register/complete-profile');
-          window.location.href = '/register/complete-profile';
+          router.push('/register/complete-profile');
+          // window.location.href = '/register/complete-profile';
         }
       } else {
         alert(loginData.message || 'Failed to login.');
