@@ -116,7 +116,7 @@ export default function Home() {
               </div>
             </div>
             <div className='section_profile_right'>
-              {/* <TradingViewWidget stockCode={companyData?.stockCode} /> */}
+              <TradingViewWidget stockCode={companyData?.stockCode} />
             </div>
           </>
         );
