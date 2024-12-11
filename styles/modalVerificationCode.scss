@@ -1,0 +1,251 @@
+.modal_wrapper{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    overflow-x: auto;
+    z-index: 1001;
+    .overlay{
+        width:100%;
+        height: 100%;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.75);
+    }
+    .modal_box{
+        width: 100%;
+        max-width: 480px;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+        text-align: center;
+        h2{
+            margin-bottom: 10px;
+            color: #332C2B;
+        }
+        p{
+            color: #332C2B;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        span{
+            font-weight: bold;
+            font-size: 24px;
+            display: block;
+            margin-bottom: 20px;
+        }
+    }
+    &.registration_success{
+        .overlay{
+            backdrop-filter: blur(10px);
+        }
+        .modal_box{
+            h2{
+                font-size: 24px;
+            }
+            h3{
+                color: #2C347F;
+                font-size: 24px;
+                margin-bottom: 15px;
+                line-height: normal;
+                text-transform: capitalize;
+            }
+            p{
+                margin-bottom: 15px;
+            }
+            .red_text{
+                font-size: 16px;
+                font-weight: bold;
+                display: inline-block;
+                margin-bottom: 0;
+                color: #FF2F00;
+            }
+            .black_text{
+                font-size: 16px;
+                font-weight: bold;
+                display: inline-block;
+                margin-bottom: 0;
+                text-decoration: underline;
+            }
+            .download_pdf_btn{
+                border: 1px solid #009B4C;
+                border-radius: 10px;
+                box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+                width: 100%;
+                display: block;
+                height: 50px;
+                line-height: 50px;
+                margin-bottom: 20px;
+                cursor: pointer;
+                span{
+                    font-size: 14px;
+                    margin-bottom: 0;
+                    color: #009B4C;
+                    display: inline-block;
+                    background: url('../public/images/icon_download.png') no-repeat left center / 24px;
+                    padding-left: 26px;
+                    text-transform: capitalize;
+                }
+            }
+            .green_btn{
+                max-width: 100px;
+                margin: 0 auto;
+                line-height: 44px;
+            }
+        }
+    }
+    &.registration_form{
+        .modal_box{
+            p{
+                color: #332C2B;
+                font-size: 16px;
+                font-weight: 500;
+                span.red_text{
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #FF2F00;
+                    display: inline-block;
+                }
+            }
+            .upload_box{
+                width: 100%;
+                height: 64px;
+                line-height: 64px;
+                border: 2px dashed #C9C9C9;
+                border-radius: 8px;
+                position: relative;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+                background: #fff;
+                span{
+                    background: url('../public/images/icon_upload_grey.png') no-repeat right 15px center / 24px;
+                    padding: 0 20px;
+                    color: #C9C9C9;
+                    text-align: left;
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+                input[type="file"]{
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    opacity: 0;
+                    z-index: 10;
+                    cursor: pointer;
+                }
+            }
+            .green_btn{
+                max-width: 160px;
+                margin: 0 auto;
+                line-height: 44px;
+            }
+        }
+    }
+    &.change_password,
+    &.pic,
+    &.leader{
+        .modal_box{
+            h5{
+                margin-bottom: 10px;
+                color: #332C2B;
+                font-size: 24px;
+            }
+            .form_box{
+                margin-bottom: 20px;
+                text-align: left;
+                input{
+                    height: 30px;
+                    &:read-only{
+                        color: #999999;
+                    }
+                }
+                span.title{
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #C9C9C9;
+                    display: block;
+                    margin-bottom: 0;
+                    i{
+                        color: #FF2F00;
+                    }
+                }
+                .radio_box{
+                    display: flex;
+                    flex-wrap: wrap;
+                    .radio_ctr{
+                        position: relative;
+                        margin-right: 10px;
+                        input[type="radio"]{
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            z-index: 10;
+                            opacity: 0;
+                            &:checked + span{
+                                background: url('../public/images/icon_radio_fill.png') no-repeat left center / 14px;
+                            }
+                        }
+                        span{
+                            background: url('../public/images/icon_radio_empty.png') no-repeat left center / 14px;
+                            padding-left: 18px;
+                            margin-bottom: 0;
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+            .leaders_box{
+                position: relative;
+            }
+            .remove_leader_btn{
+                background: url('../public/images/icon_remove.png') no-repeat left center / 20px;
+                text-align: left;
+                padding-left: 25px;
+                font-weight: 500;
+                font-size: 16px;
+                color: #FF2F00;
+                border: none;
+                position: absolute;
+                top: 0;
+                right: 0
+            }
+            .add_leader_btn{
+                width: 100%;
+                background: url('../public/images/icon_add.png') no-repeat right center / 24px;
+                text-align: right;
+                padding-right: 30px;
+                font-weight: 500;
+                font-size: 16px;
+                color: #332C2B;
+                margin-bottom: 20px;
+            }
+            .button_wrapper{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                .grey_btn{
+                    width: 80px;
+                    margin: 0 5px;
+                }
+                .green_btn{
+                    width: 80px;
+                    margin: 0 5px;
+                }
+            }
+        }
+    }
+}

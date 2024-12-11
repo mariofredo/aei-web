@@ -1,0 +1,49 @@
+.section_cover_slider {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    .slider_image {
+      position: relative;
+      img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+    }
+  
+    .upload_btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      input[type='file'] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+      span {
+        background: #fff;
+        color: #391085;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: inline-block;
+      }
+    }
+  
+    .slick-dots {
+      bottom: 15px;
+      li button:before {
+        color: #fff;
+      }
+      li.slick-active button:before {
+        color: #f5222d;
+      }
+    }
+  }
+  

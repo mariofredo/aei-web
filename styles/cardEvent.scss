@@ -1,0 +1,104 @@
+.card_flex{
+    display: flex;
+    flex-wrap: wrap;
+}
+.card_event{
+    width: calc((100% - 40px)/3);
+    padding: 10px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    &:nth-child(3n){
+        margin-right: 0;
+    }
+    .card_image{
+        width: 100%;
+        border-radius: 10px;
+        height: 185px;
+        overflow: hidden;
+        margin-bottom: 5px;
+        position: relative;
+        img{
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card_flag{
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #2F318B;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 10px;
+            text-transform: capitalize;
+            box-shadow: 0 4px 4px rgba($color: #000000, $alpha: 0.2);
+            &.free{
+                background: #009B4C;
+            }
+        }
+    }
+    .card_info{
+        .event_title{
+            font-size: 16px;
+            min-height: 45px;
+            max-height: 45px;
+            font-weight: bold;
+            color: #2F318B;
+            margin-bottom: 5px;
+            display: block;
+            line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .event_location{
+            padding-left: 25px;
+            background: url('../public/images/icon_location.png') no-repeat left center / 24px;
+            font-size: 14px;
+            color: #C9C9C9;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .event_date{
+            padding-left: 25px;
+            background: url('../public/images/icon_date.png') no-repeat left center / 24px;
+            font-size: 14px;
+            color: #C9C9C9;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .event_time{
+            padding-left: 25px;
+            background: url('../public/images/icon_time.png') no-repeat left center / 24px;
+            font-size: 14px;
+            color: #C9C9C9;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+    }
+    .card_btn{
+        .orange_btn,
+        .blue_btn,
+        .green_btn{
+            box-shadow: 0 4px 4px rgba($color: #000000, $alpha: 0.2);
+            line-height: 44px;
+            font-weight: bold;
+        }
+        .blue_btn{
+            span{
+                background:url('../public/images/icon_ticket.png') no-repeat left center / 24px;
+                padding-left: 25px;
+            }
+        }
+    }
+}

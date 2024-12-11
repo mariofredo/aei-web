@@ -1,0 +1,265 @@
+.section_payment{
+    min-height: calc(100vh - 90px);
+    background: url('../public/images/batik.png') repeat center / cover fixed;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .payment_step_one{
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        max-width: 550px;
+        margin: 0 auto;
+        text-align: center;
+        h4{
+            font-size: 24px;
+            color: #332C2B;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        h3{
+            font-size: 32px;
+            color: #2C347F;
+            font-weight: bold;
+        }
+        .stock_name{
+            font-size: 24px;
+            color: #C9C9C9;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 20px;
+            .blue_text{
+                color: #2C347F;
+            }
+        }
+        .section_benefit{
+            border-radius: 10px;
+            background: #EFEFEF;
+            padding: 20px;
+            max-width: 360px;
+            width: 100%;
+            margin: 0 auto 10px;
+            text-align: left;
+            font-weight: 500;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+            color: #000000;
+            ul{
+                list-style: none;
+                li{
+                    padding-left: 20px;
+                    position: relative;
+                    &::before{
+                        content: '';
+                        display: block;
+                        width: 10px;
+                        height: 10px;
+                        background: #009B4C;
+                        border-radius: 10px;
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+        .section_price{
+            width: 100%;
+            max-width: 360px;
+            border: 1px solid #009B4C;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 0 auto 10px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+            strong{
+                color: #2C347F;
+                font-size: 32px;
+                font-weight: bold;
+            }
+            span{
+                display: block;
+                color: #C9C9C9;
+                font-weight: 500;
+            }
+        }
+        .bank_payment{
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto 20px;
+            h5{
+                font-size: 16px;
+                font-weight: 700;
+                color: #332C2B;
+                display: block;
+                margin-bottom: 10px;
+            }
+            .radio_box{
+                position: relative;
+                border-radius: 10px;
+                border: 1px solid #000;
+                margin-bottom: 10px;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+                input[type="radio"]{
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                    z-index: 10;
+                    &:checked + span{
+                        &::before{
+                            background: #2C347F;
+                        }
+                    }
+                }
+                span{
+                    display: block;
+                    padding: 10px 0;
+                    font-weight: 500;
+                    color: #332C2B;
+                    font-size: 16px;
+                    cursor: pointer;
+                    position: relative;
+                    text-align: left;
+                    padding-left: 45px;
+                    &::before{
+                        content: '';
+                        display: block;
+                        width: 14px;
+                        height: 14px;
+                        background: #fff;
+                        border: 1px solid #000;
+                        border-radius: 14px;
+                        position: absolute;
+                        top: 50%;
+                        left: 20px;
+                        transform: translateY(-50%);
+                    }
+                }
+                img{
+                    position: absolute;
+                    top: 50%;
+                    right: 20px;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+        .section_info_payment{
+            padding: 10px;
+            background: #F5F5F5;
+            border-radius: 10px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            margin-bottom: 10px;
+            .copy_btn{
+                width: 24px;
+                height: 24px;
+                display: block;
+                background: url('../public/images/icon_copy.png') no-repeat center / 24px;
+                position: absolute;
+                bottom: 6px;
+                right: 0;
+                cursor: pointer;
+            }
+        }
+        .sip_box{
+            margin-bottom: 10px;
+            position: relative;
+            &:last-child{
+                margin-bottom: 0;
+            }
+            h5{
+                color: #332C2B;
+                font-weight: 500;
+            }
+            span{
+                display: block;
+                font-weight: 700;
+                font-size: 24px;
+                color: #2C347F;
+            }
+            img{
+                position: absolute;
+                bottom: 10px;
+                right: 0;
+            }
+        }
+        .confirm_payment{
+            h5{
+                font-size: 16px;
+                font-weight: 700;
+                color: #332C2B;
+                display: block;
+                margin-bottom: 10px;
+            }
+            .form_box{
+                text-align: left;
+                margin-bottom: 15px;
+                span{
+                    color: #332C2B;
+                    i{
+                        color: #FF2F00;
+                    }
+                }
+            }
+        }
+        .upload_box{
+            margin-bottom: 20px;
+            h5{
+                margin-bottom: 10px;
+            }
+            .upload_btn{
+                border: 2px dashed #2F318B;
+                border-radius: 8px;
+                height: 64px;
+                line-height: 64px;
+                position: relative;
+                background: #fff;
+                box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+                input[type="file"]{
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                    cursor: pointer;
+                    z-index: 10;
+                }
+                span{
+                    font-weight: 500;
+                    font-size: 14px;
+                    padding: 0 20px;
+                    display: block;
+                    color: #2F318B;
+                    text-align: left;
+                    background: url('../public/images/icon_upload_blue.png') no-repeat right 15px center / 24px;
+                }
+            }
+            .info{
+                color: #C9C9C9;
+                font-weight: 500;
+                font-size: 14px;
+                text-align: center;
+                display: block;
+            }
+        }
+        .button_wrapper{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            .grey_btn{
+                width: 160px;
+                margin: 0 10px;
+                color: #fff;
+            }
+            .green_btn{
+                width: 160px;
+                margin: 0 10px;
+            }
+        }
+    }
+}
