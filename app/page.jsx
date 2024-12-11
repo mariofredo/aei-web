@@ -82,10 +82,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    console.log(showEditProfilePopup, 'showEditProfilePopup');
-  }, [showEditProfilePopup]);
-
   if (loading) {
     return <div className='loader center'></div>;
   }
@@ -179,20 +175,37 @@ export default function Home() {
                   <div className='section_payment_home'>
                     <h3>Payment History</h3>
                     <div className='sp_wrap'>
-                      {invoices.map((invoice) => (
-                        <div className='sp_box'>
-                          <h5>{invoice.code}</h5>
-                          {invoice.note && (
-                            <span className='info'>{invoice.note}</span>
-                          )}
-                          <span className='date'>{invoice.invoiceDate}</span>
+                      {invoices.map((invoice, index) => (
+                        <div
+                          className='sp_box'
+                          key={index}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                          }}
+                        >
+                          <div>
+                            <h5>{invoice.code}</h5>
+                            {invoice.note && (
+                              <span className='info'>{invoice.note}</span>
+                            )}
+                            <span className='date'>{invoice.invoiceDate}</span>
+                          </div>
                           {invoice.status === 'in_review' ? (
                             <span className='orange_btn'>
                               waiting confirmation
                             </span>
                           ) : invoice.status === 'paid' ? (
-                            <span className='blue_btn'>
-                              <span></span>
+                            <span
+                              className='blue_btn'
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '200px',
+                              }}
+                            >
+                              Download Invoice
                             </span>
                           ) : (
                             <Link

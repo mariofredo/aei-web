@@ -107,7 +107,7 @@ export default function ModalLeader({setShowPopupLeader, setLeaderData}) {
         <div className="leaders_wrapper">
           {formData.leaders.map((leader, index) => (
             <div key={index} className="leaders_box">
-              <h5>
+              <h5 style={{width: '100%', textAlign: 'left'}}>
                 Board of Executive {index + 1 + (leaderData?.length ?? 0)}
               </h5>
               <div className="form_box">
@@ -160,7 +160,7 @@ export default function ModalLeader({setShowPopupLeader, setLeaderData}) {
                   required
                 >
                   <option value="" disabled>
-                    Select Leader Position
+                    Select Executive Position
                   </option>
                   {leadersPosition.map((directorpos) => (
                     <option key={directorpos.id} value={directorpos.id}>
@@ -183,8 +183,9 @@ export default function ModalLeader({setShowPopupLeader, setLeaderData}) {
                 <button
                   className="remove_leader_btn"
                   onClick={() => removeLeader(index)}
+                  style={{marginTop: '8px'}}
                 >
-                  Remove Leader
+                  Remove
                 </button>
               )}
             </div>

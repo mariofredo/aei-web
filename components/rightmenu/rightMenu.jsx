@@ -61,7 +61,7 @@ export default function RightMenu({companyName, stockCode, listingDate, admissio
                             className={activeTab === "Leaders and PIC" ? "active" : ""}
                             onClick={() => onTabClick("Leaders and PIC")}
                         >
-                            Leaders and PIC
+                            Executives and PIC
                         </li>
                     </ul>
                 </div>
