@@ -1,5 +1,5 @@
 'use client';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import {SlickSlider} from '@/components';
 import '../../styles/auth.scss';
@@ -18,19 +18,18 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    setLoading(true);
-
-    const payload = {
-      email,
-      password,
-    };
-
     try {
+      if (!email || !password) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      setLoading(true);
+
+      const payload = {
+        email,
+        password,
+      };
       // Panggil API login
       const loginResponse = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
@@ -57,10 +56,7 @@ export default function Login() {
         Cookies.set('type', type, {expires: 7, path: '/'});
         Cookies.set('email', email, {expires: 7, path: '/'});
         if (is_profile_completed) {
-          if (Cookies.get('token')) {
-            console.log('Token:', Cookies.get('token'));
-            router.push('/');
-          }
+          router.push('/');
         } else {
           router.push('/register/complete-profile');
         }
