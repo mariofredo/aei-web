@@ -23,7 +23,7 @@ export default function CardEvent({ events }) {
                     </div>
                     <div className="card_btn">
                         {event.paidStatus === 'paid' ? (
-                            <Link className="blue_btn" href={`/event/${event.slug}`}><span>Download Ticket</span></Link>
+                            <Link className="blue_btn" href={`/event/${event.slug}?q=download_ticket`}><span>Download Ticket</span></Link>
                         ) : event.paidStatus === 'payment_in_review' ? (
                             <Link className="orange_btn" href={`/event/${event.slug}`}><span>Waiting Confirmation</span></Link>
                         ) : (

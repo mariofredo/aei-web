@@ -1,12 +1,16 @@
 'use client';
 import {useState, useEffect} from 'react';
-import {useRouter} from 'next/navigation'; // Untuk navigasi
+import {useRouter, useSearchParams} from 'next/navigation'; // Untuk navigasi
 import Image from 'next/image';
 import Cookies from 'js-cookie';
+import {FaSearch} from 'react-icons/fa';
+import {FaTicketAlt} from 'react-icons/fa';
 import {formatDate} from '@/utils';
 import '@/styles/eventDetail.scss';
 
 export default function EventDetail({params}) {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('q');
   const {slug} = params;
   const [event, setEvent] = useState(null);
   const [data, setData] = useState(null);
@@ -95,12 +99,45 @@ export default function EventDetail({params}) {
           </div>
         </div>
         <div className="sed_mid">
-          <div
-            className="green_btn"
-            onClick={() => router.push(`/event/payment?slug=${slug}`)}
-          >
-            Join Seminar
-          </div>
+          {query === 'download_ticket' ? (
+            <div style={{display: 'flex', gap: '10px'}}>
+              <div
+                className="blue_btn"
+                style={{
+                  width: '200px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '6px',
+                }}
+                onClick={() => {}}
+              >
+                <FaSearch color="#fff" />
+                See Invoice
+              </div>
+              <div
+                className="green_btn"
+                style={{
+                  width: '240px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '6px',
+                }}
+                onClick={() => {}}
+              >
+                <FaTicketAlt color="#fff" />
+                Download Ticket
+              </div>
+            </div>
+          ) : (
+            <div
+              className="green_btn"
+              onClick={() => router.push(`/event/payment?slug=${slug}`)}
+            >
+              Join Seminar
+            </div>
+          )}
         </div>
         <div className="sed_bottom">
           <div className="sedb_button">
