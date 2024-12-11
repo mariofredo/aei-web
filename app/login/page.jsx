@@ -1,36 +1,36 @@
 'use client';
-import {useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import {SlickSlider} from '@/components';
-import '../../styles/auth.scss';
-import Link from 'next/link';
 import {useRouter} from 'next/navigation'; // For programmatic navigation
+import Link from 'next/link';
+import '../../styles/auth.scss';
 
 export default function Login() {
+  const router = useRouter(); // For navigation after login
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State untuk mengontrol visibility password
-  const router = useRouter(); // For navigation after login
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState); // Toggle visibility
   };
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    setLoading(true);
-
-    const payload = {
-      email,
-      password,
-    };
-
+  const handleLogin = useCallback(async () => {
     try {
+      console.log(router, 'router');
+      if (!email || !password) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      setLoading(true);
+
+      const payload = {
+        email,
+        password,
+      };
       // Panggil API login
       const loginResponse = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
@@ -56,13 +56,12 @@ export default function Login() {
         });
         Cookies.set('type', type, {expires: 7, path: '/'});
         Cookies.set('email', email, {expires: 7, path: '/'});
+
         if (is_profile_completed) {
-          if (Cookies.get('token')) {
-            console.log('Token:', Cookies.get('token'));
-            router.push('/');
-          }
+          router.push('/');
         } else {
           router.push('/register/complete-profile');
+          // window.location.href = '/register/complete-profile';
         }
       } else {
         alert(loginData.message || 'Failed to login.');
@@ -73,7 +72,7 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [email, password, router]);
 
   return (
     <div className='section_login'>
@@ -118,7 +117,10 @@ export default function Login() {
             <div className='button_wrapper'>
               <button
                 className='green_btn'
-                onClick={handleLogin}
+                onClick={() => {
+                  router.refresh();
+                  handleLogin();
+                }}
                 disabled={loading}
               >
                 {loading ? 'Logging in...' : 'Login'}

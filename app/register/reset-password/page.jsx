@@ -89,6 +89,7 @@ function ResetPassword() {
                                     placeholder="Enter your new password"
                                 />
                                 <button
+                                    className={showPassword ? 'active' : ''}
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
@@ -106,8 +107,12 @@ function ResetPassword() {
                                     placeholder="Confirm your new password"
                                 />
                                 <button
+                                    className={showConfirmPassword ? 'active' : ''}
                                     type="button"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    onClick={() => {
+                                        console.log('Tombol diklik');
+                                        setShowConfirmPassword(!showConfirmPassword);
+                                    }}
                                 >
                                     {showConfirmPassword ? 'Hide' : 'Show'}
                                 </button>
@@ -120,10 +125,10 @@ function ResetPassword() {
                         </div>
                     </div>
                 ) : (
-                    <div className="scp_box">
+                    <div className="scp_box" style={{textAlign:'Center'}}>
                         <h2>Password Reset Successful</h2>
                         <p>Your password has been successfully reset.</p>
-                        <div className="button_wrapper">
+                        <div className="button_wrapper" style={{marginTop:'20px'}}>
                             <button className="green_btn" onClick={() => router.push('/')}>
                                 Go to Login
                             </button>

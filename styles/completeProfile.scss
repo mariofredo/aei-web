@@ -79,6 +79,22 @@
     }
     .form_box{
         margin-bottom: 20px;
+        .password_field{
+            position: relative;
+            button{
+                width: 30px;
+                height: 30px;
+                background: url('../public/images/icon_eye_close.png') no-repeat center / 24px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                border: none;
+                text-indent: -9999px;
+                &.active{
+                    background: url('../public/images/icon_eye.png') no-repeat center / 24px;
+                }
+            }
+        }
         input{
             height: 30px;
             &:read-only{
