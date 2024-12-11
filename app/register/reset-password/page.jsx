@@ -107,7 +107,7 @@ function ResetPassword() {
                                     placeholder="Confirm your new password"
                                 />
                                 <button
-                                    className={showPassword ? 'active' : ''}
+                                    className={setShowConfirmPassword ? 'active' : ''}
                                     type="button"
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 >
@@ -122,10 +122,10 @@ function ResetPassword() {
                         </div>
                     </div>
                 ) : (
-                    <div className="scp_box">
+                    <div className="scp_box" style={{textAlign:'Center'}}>
                         <h2>Password Reset Successful</h2>
                         <p>Your password has been successfully reset.</p>
-                        <div className="button_wrapper">
+                        <div className="button_wrapper" style={{marginTop:'20px'}}>
                             <button className="green_btn" onClick={() => router.push('/')}>
                                 Go to Login
                             </button>
