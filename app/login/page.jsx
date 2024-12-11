@@ -56,12 +56,9 @@ export default function Login() {
         });
         Cookies.set('type', type, {expires: 7, path: '/'});
         Cookies.set('email', email, {expires: 7, path: '/'});
-        // router.refresh();
+
         if (is_profile_completed) {
-          // router.refresh();
-          // console.log('refresh');
           router.push('/');
-          // window.location.href = '/';
         } else {
           router.push('/register/complete-profile');
           // window.location.href = '/register/complete-profile';
@@ -121,7 +118,6 @@ export default function Login() {
               <button
                 className='green_btn'
                 onClick={() => {
-                  // router.refresh();
                   handleLogin();
                 }}
                 disabled={loading}
