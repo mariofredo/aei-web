@@ -118,6 +118,7 @@ export default function Login() {
               <button
                 className='green_btn'
                 onClick={() => {
+                  router.refresh();
                   handleLogin();
                 }}
                 disabled={loading}
