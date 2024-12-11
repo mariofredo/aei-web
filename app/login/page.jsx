@@ -118,7 +118,10 @@ export default function Login() {
             <div className='button_wrapper'>
               <button
                 className='green_btn'
-                onClick={handleLogin}
+                onClick={() => {
+                  router.refresh();
+                  handleLogin();
+                }}
                 disabled={loading}
               >
                 {loading ? 'Logging in...' : 'Login'}
