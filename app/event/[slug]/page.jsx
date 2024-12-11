@@ -1,6 +1,6 @@
 'use client';
 import {useState, useEffect} from 'react';
-import {useRouter, useSearchParams} from 'next/navigation'; // Untuk navigasi
+import {useParams, useRouter, useSearchParams} from 'next/navigation'; // Untuk navigasi
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import {FaSearch} from 'react-icons/fa';
@@ -8,9 +8,10 @@ import {FaTicketAlt} from 'react-icons/fa';
 import {formatDate} from '@/utils';
 import '@/styles/eventDetail.scss';
 
-export default function EventDetail({params}) {
+export default function EventDetail({}) {
   const searchParams = useSearchParams();
   const query = searchParams.get('q');
+  const params = useParams();
   const {slug} = params;
   const [event, setEvent] = useState(null);
   const [data, setData] = useState(null);
@@ -147,37 +148,37 @@ export default function EventDetail({params}) {
             >
               Description
             </div>
-            <div
+            {/* <div
               className={activeEventTab === 'certification' ? 'active' : ''}
               onClick={() => handleTabEventClick('certification')}
             >
               Certification
-            </div>
+            </div> */}
           </div>
           <div className="sedb_ctr">
             {activeEventTab === 'description' && (
               <div className="desc_box">
                 <div className="desc_left">
-                  <p>
-                    <pre style={{whiteSpace: 'break-spaces', width: '100%'}}>
-                      {event.description}
-                    </pre>
-                  </p>
+                  <pre style={{whiteSpace: 'break-spaces', width: '100%'}}>
+                    {event.description}
+                  </pre>
                 </div>
                 <div className="desc_right">
                   <div className="dr_box">
                     <h4>Schedule</h4>
                     <table>
-                      <tr>
-                        <td>Start</td>
-                        <td>:</td>
-                        <td>{formatDate(event.scheduleStart)}</td>
-                      </tr>
-                      <tr>
-                        <td>End</td>
-                        <td>:</td>
-                        <td>{formatDate(event.scheduleEnd)}</td>
-                      </tr>
+                      <tbody>
+                        <tr>
+                          <td>Start</td>
+                          <td>:</td>
+                          <td>{formatDate(event.scheduleStart)}</td>
+                        </tr>
+                        <tr>
+                          <td>End</td>
+                          <td>:</td>
+                          <td>{formatDate(event.scheduleEnd)}</td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                   <div className="dr_box">

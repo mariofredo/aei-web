@@ -421,6 +421,19 @@ export default function Page() {
                       </div>
                       <div>
                         <label htmlFor={`position-${index}`}>Position:</label>
+                        <input
+                          type="text"
+                          id={`position-${index}`}
+                          value={participant.position}
+                          onChange={(e) =>
+                            handleParticipantChange(
+                              index,
+                              'position',
+                              e.target.value
+                            )
+                          }
+                        />
+                        {/* <label htmlFor={`position-${index}`}>Position:</label>
                         <select
                           id={`position-${index}`}
                           value={participant.position}
@@ -440,7 +453,7 @@ export default function Page() {
                               {position.name}
                             </option>
                           ))}
-                        </select>
+                        </select> */}
                       </div>
                       <div>
                         <label htmlFor={`mobile-${index}`}>
@@ -601,8 +614,8 @@ export default function Page() {
         return (
           <div className="ep_box">
             <div className="ep_box_outer">
-              <p className='title'>Order Success</p>
-              <p className='desc'>
+              <p className="title">Order Success</p>
+              <p className="desc">
                 your order for <span>{eventDetails?.title}</span> is Success.
                 please wait for admin to confirm your payment
               </p>
@@ -632,7 +645,7 @@ export default function Page() {
     eventDetails,
     selectedBank,
     additionalContent,
-    slug
+    slug,
   ]);
 
   return (

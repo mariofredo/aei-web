@@ -100,7 +100,7 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
         <div className="modal_wrapper pic">
             <div className="overlay" onClick={() => setShowEditLeaderPopup(false)}></div>
             <div className="modal_box">
-                <h5>Edit Leader</h5>
+                <h5>Edit Executive</h5>
                 <div className="form_box">
                     <span className="title">Title<i>*</i></span>
                     <div className="radio_box">
@@ -151,7 +151,7 @@ export default function ModalEditLeader({ showEditLeaderPopup, setShowEditLeader
                             required
                         >
                             <option value="" disabled>
-                                Select Leader Position
+                                Select Executive Position
                             </option>
                             {directorsPosition.map((directorpos) => (
                                 <option key={directorpos.id} value={directorpos.id}>

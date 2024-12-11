@@ -82,12 +82,9 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    console.log(showEditProfilePopup, 'showEditProfilePopup');
-  }, [showEditProfilePopup]);
 
   if (loading) {
-    return <div className='loader center'></div>;
+    return <div className="loader center"></div>;
   }
   const handleTabClick = (tab) => {
     setActivityTab(tab); // Mengubah tab aktif berdasarkan klik
@@ -98,24 +95,24 @@ export default function Home() {
       case 'Profile':
         return (
           <>
-            <div className='section_profile_left'>
-              <div className='section_about_company'>
+            <div className="section_profile_left">
+              <div className="section_about_company">
                 <h4>About The Company</h4>
                 <p>{companyData?.about}</p>
               </div>
-              <div className='section_industry_company'>
+              <div className="section_industry_company">
                 <h4>Industry Classification</h4>
-                <div className='sic_box'>
+                <div className="sic_box">
                   <h5>Industrial Sector</h5>
                   <p>{companyData?.industryClassificationName}</p>
                 </div>
-                <div className='sic_box'>
+                <div className="sic_box">
                   <h5>Sub Sector</h5>
                   <p>{companyData?.subSector}</p>
                 </div>
               </div>
             </div>
-            <div className='section_profile_right'>
+            <div className="section_profile_right">
               {/* <TradingViewWidget stockCode={companyData?.stockCode} /> */}
             </div>
           </>
@@ -124,20 +121,20 @@ export default function Home() {
         return (
           <>
             {companyData?.status === 'data_submitted' ? (
-              <div className='section_membership_none'>
+              <div className="section_membership_none">
                 <h3>Complete your registration</h3>
                 <p>Please download and sign the form bellow.</p>
                 <p>
-                  Then <span className='red_text'>upload and send</span> the
-                  signed file to <span className='black_text'>AEI office</span>{' '}
+                  Then <span className="red_text">upload and send</span> the
+                  signed file to <span className="black_text">AEI office</span>{' '}
                   address to complete the registration
                 </p>
-                <Link href='' className='download_pdf_btn'>
+                <Link href="" className="download_pdf_btn">
                   <span>{companyData?.companyName} Registration Form.PDF</span>
                 </Link>
               </div>
             ) : companyData?.status === 'in_review' ? (
-              <div className='section_membership_none in_review'>
+              <div className="section_membership_none in_review">
                 <h3>Waiting for Confirmation</h3>
                 <p>
                   Your registration will be approved after we receive your{' '}
@@ -146,58 +143,75 @@ export default function Home() {
                 </p>
               </div>
             ) : (
-              <div className='section_membership'>
-                <div className='sm_left'>
-                  <div className='membership_box'>
+              <div className="section_membership">
+                <div className="sm_left">
+                  <div className="membership_box">
                     <h3>Membership</h3>
-                    <div className='mb_ctr'>
+                    <div className="mb_ctr">
                       <h5>Membership Number</h5>
                       <span>{companyData?.membershipNumber}</span>
                     </div>
-                    <div className='mb_ctr'>
+                    <div className="mb_ctr">
                       <h5>Member Category</h5>
-                      <span className='green_text'>
+                      <span className="green_text">
                         {companyData?.companyCategoryName}
                       </span>
                     </div>
                   </div>
                   {companyData?.memberStatus === 'inactive' ? (
-                    <div className='member_status inactive'>
+                    <div className="member_status inactive">
                       status: <span>Inactive</span>
                     </div>
                   ) : companyData?.memberStatus === 'paid' ? (
-                    <div className='member_status paid'>
+                    <div className="member_status paid">
                       status: <span>Active</span>
                     </div>
                   ) : (
-                    <div className='member_status expired'>
+                    <div className="member_status expired">
                       status: <span>Expired</span>
                     </div>
                   )}
                 </div>
-                <div className='sm_right'>
-                  <div className='section_payment_home'>
+                <div className="sm_right">
+                  <div className="section_payment_home">
                     <h3>Payment History</h3>
-                    <div className='sp_wrap'>
-                      {invoices.map((invoice) => (
-                        <div className='sp_box'>
-                          <h5>{invoice.code}</h5>
-                          {invoice.note && (
-                            <span className='info'>{invoice.note}</span>
-                          )}
-                          <span className='date'>{invoice.invoiceDate}</span>
+                    <div className="sp_wrap">
+                      {invoices.map((invoice, index) => (
+                        <div
+                          className="sp_box"
+                          key={index}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                          }}
+                        >
+                          <div>
+                            <h5>{invoice.code}</h5>
+                            {invoice.note && (
+                              <span className="info">{invoice.note}</span>
+                            )}
+                            <span className="date">{invoice.invoiceDate}</span>
+                          </div>
                           {invoice.status === 'in_review' ? (
-                            <span className='orange_btn'>
+                            <span className="orange_btn">
                               waiting confirmation
                             </span>
                           ) : invoice.status === 'paid' ? (
-                            <span className='blue_btn'>
-                              <span></span>
+                            <span
+                              className="blue_btn"
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '200px',
+                              }}
+                            >
+                              Download Invoice
                             </span>
                           ) : (
                             <Link
                               href={`/payment?invoiceCode=${invoice.id}`}
-                              className='green_btn'
+                              className="green_btn"
                             >
                               Pay
                             </Link>
@@ -213,10 +227,10 @@ export default function Home() {
         );
       case 'Activity':
         return (
-          <div className='section_activity'>
-            <div className='sa_top'>
+          <div className="section_activity">
+            <div className="sa_top">
               <h3>Seminar</h3>
-              <div className='sa_menu'>
+              <div className="sa_menu">
                 <div
                   className={`upcoming_btn ${
                     activityTab === 'upcoming' ? 'active' : ''
@@ -235,13 +249,13 @@ export default function Home() {
                     History
                   </div>
                 ) : (
-                  <div className='history_btn'>
+                  <div className="history_btn">
                     <span>History</span>
                   </div>
                 )}
               </div>
             </div>
-            <div className='card_flex'>
+            <div className="card_flex">
               {activityTab === 'upcoming' && (
                 <CardEvent events={upcomingData} />
               )}
@@ -252,11 +266,11 @@ export default function Home() {
       case 'Leaders and PIC':
         return (
           <>
-            <div className='section_table_box'>
-              <div className='stb_ctr'>
+            <div className="section_table_box">
+              <div className="stb_ctr">
                 <h3>Board of Executive</h3>
                 <div
-                  className='add_more_btn'
+                  className="add_more_btn"
                   onClick={handleAddMoreLeaderClick}
                 >
                   Add More
@@ -275,9 +289,9 @@ export default function Home() {
                         {leaderData.positionName}
                       </td>
                       <td>
-                        <div className='action_btn'>
+                        <div className="action_btn">
                           <div
-                            className='delete_btn'
+                            className="delete_btn"
                             onClick={() =>
                               handleDeleteLeaderClick(leaderData.id)
                             }
@@ -285,7 +299,7 @@ export default function Home() {
                             Delete
                           </div>
                           <div
-                            className='edit_btn'
+                            className="edit_btn"
                             onClick={() => handleEditLeaderClick(leaderData)}
                           >
                             Edit
@@ -297,8 +311,8 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
-            <div className='section_table_box'>
-              <div className='stb_ctr'>
+            <div className="section_table_box">
+              <div className="stb_ctr">
                 <h3>PIC</h3>
                 <div
                   className={`add_more_btn ${
@@ -330,21 +344,21 @@ export default function Home() {
                         {picData.phone}
                       </td>
                       <td>
-                        <div className='action_btn'>
+                        <div className="action_btn">
                           <div
-                            className='delete_btn'
+                            className="delete_btn"
                             onClick={() => handleDeleteClick(picData.id)}
                           >
                             Delete
                           </div>
                           <div
-                            className='edit_btn'
+                            className="edit_btn"
                             onClick={() => handleEditClick(picData)}
                           >
                             Edit
                           </div>
                           <div
-                            className='change_password'
+                            className="change_password"
                             onClick={() => {
                               setSelectedId(picData.id); // Set ID saat tombol Change Password diklik
                               setShowPopup(true); // Tampilkan popup
@@ -367,9 +381,9 @@ export default function Home() {
   };
   return (
     <>
-      <div className='section_homepage'>
+      <div className="section_homepage">
         <CoverImage cover={companyData?.banner || null} />
-        <div className='container'>
+        <div className="container">
           <LeftMenu
             hqAdress={companyData?.headquarterAddress}
             officeAdress={companyData?.managementOfficeAddress}

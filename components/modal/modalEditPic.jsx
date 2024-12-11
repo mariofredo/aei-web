@@ -94,7 +94,7 @@ export default function ModalEditPic({ showEditPopup, setShowEditPopup, data, se
                         required
                     >
                         <option value="" disabled>
-                            Select Leader Position
+                            Select Executive Position
                         </option>
                         {picPosition.map((picpos) => (
                             <option key={picpos.id} value={picpos.id}>
