@@ -107,7 +107,7 @@ function ResetPassword() {
                                     placeholder="Confirm your new password"
                                 />
                                 <button
-                                    className={setShowConfirmPassword ? 'active' : ''}
+                                    className={showConfirmPassword ? 'active' : ''}
                                     type="button"
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 >
