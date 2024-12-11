@@ -57,6 +57,7 @@ export default function Login() {
         Cookies.set('email', email, {expires: 7, path: '/'});
         if (is_profile_completed) {
           router.refresh();
+          console.log('refresh');
           router.push('/');
           // window.location.href = '/';
         } else {
