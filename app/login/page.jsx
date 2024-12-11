@@ -1,24 +1,25 @@
 'use client';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import {SlickSlider} from '@/components';
-import '../../styles/auth.scss';
-import Link from 'next/link';
 import {useRouter} from 'next/navigation'; // For programmatic navigation
+import Link from 'next/link';
+import '../../styles/auth.scss';
 
 export default function Login() {
+  const router = useRouter(); // For navigation after login
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State untuk mengontrol visibility password
-  const router = useRouter(); // For navigation after login
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState); // Toggle visibility
   };
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
     try {
+      console.log(router, 'router');
       if (!email || !password) {
         alert('Please fill in all fields.');
         return;
@@ -55,6 +56,7 @@ export default function Login() {
         });
         Cookies.set('type', type, {expires: 7, path: '/'});
         Cookies.set('email', email, {expires: 7, path: '/'});
+        router.refresh();
         if (is_profile_completed) {
           router.refresh();
           console.log('refresh');
@@ -73,7 +75,7 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [email, password, router]);
 
   return (
     <div className='section_login'>
