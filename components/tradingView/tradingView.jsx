@@ -5,11 +5,12 @@ function TradingViewWidget({ stockCode }) {
   const container = useRef();
 
   useEffect(() => {
-    // Hapus konten sebelumnya jika ada
+    // Bersihkan konten sebelumnya jika ada
     if (container.current) {
       container.current.innerHTML = '';
     }
 
+    // Buat script baru untuk widget TradingView
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
     script.type = "text/javascript";
@@ -56,7 +57,7 @@ function TradingViewWidget({ stockCode }) {
         ]
       }`;
     container.current.appendChild(script);
-  }, []); // Pastikan useEffect hanya berjalan satu kali
+  }, [stockCode]); // Tambahkan stockCode sebagai dependensi
 
   return (
     <>

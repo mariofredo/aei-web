@@ -370,6 +370,7 @@ export default function CompleteProfile(){
                                         placeholder='Your Stock Code'
                                         value={formData.stockCode}
                                         onChange={handleChange}
+                                        style={{ textTransform: 'uppercase' }}
                                         required
                                     />
                                 </div>
@@ -441,7 +442,7 @@ export default function CompleteProfile(){
                                                     name={`directors-${index}-name`}
                                                     value={leader.name}
                                                     onChange={handleChange}
-                                                    placeholder="Leader's Name"
+                                                    placeholder="Executive's Name"
                                                 />
                                             </div>
                                             <div className="form_box">
@@ -453,7 +454,7 @@ export default function CompleteProfile(){
                                                     required
                                                 >
                                                     <option value="" disabled>
-                                                        Select Leader Position
+                                                        Select Executive Position
                                                     </option>
                                                     {directorsPosition.map((directorpos) => (
                                                         <option key={directorpos.id} value={directorpos.id}>
@@ -477,13 +478,13 @@ export default function CompleteProfile(){
                                                     className="remove_leader_btn"
                                                     onClick={() => removeLeader(index)}
                                                 >
-                                                    Remove Leader
+                                                    Remove
                                                 </button>
                                             )}
                                         </div>
                                     ))}
                                     <div className="add_leader_btn" onClick={addLeader}>
-                                        Add Leader
+                                        Add Executive
                                     </div>
                                 </div>
                             </div>

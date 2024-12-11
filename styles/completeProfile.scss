@@ -16,6 +16,22 @@
         text-align: center;
         margin-bottom: 20px;
     }
+    h5{
+        text-align: center;
+        font-weight: 500;
+        font-size: 16px;
+        margin-top: -10px;
+        margin-bottom: 20px;
+    }
+    .fp_text{
+        text-align: center;
+        strong{
+            font-size: 24px;
+        }
+        .green_btn{
+            margin-top: 20px !important;
+        }
+    }
     .steps_box{
         width: 100%;
         display: flex;
@@ -63,6 +79,22 @@
     }
     .form_box{
         margin-bottom: 20px;
+        .password_field{
+            position: relative;
+            button{
+                width: 30px;
+                height: 30px;
+                background: url('../public/images/icon_eye_close.png') no-repeat center / 24px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                border: none;
+                text-indent: -9999px;
+                &.active{
+                    background: url('../public/images/icon_eye.png') no-repeat center / 24px;
+                }
+            }
+        }
         input{
             height: 30px;
             &:read-only{

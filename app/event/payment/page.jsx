@@ -7,6 +7,7 @@ import {LuCircleMinus} from 'react-icons/lu';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components';
 import {BCA, Mandiri} from '@/public';
+import {formatCurrency, formatCurrencyCopy} from '@/utils';
 import '@/styles/eventPayment.scss';
 
 export default function Page() {
@@ -20,23 +21,18 @@ export default function Page() {
   const [error, setError] = useState('');
   const [step, setStep] = useState(1);
   const [confirmedBank, setConfirmedBank] = useState('');
-  const [companyDetails, setCompanyDetails] = useState(null);
   const [invoiceDetails, setInvoiceDetails] = useState(null);
   const [selectedBank, setSelectedBank] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [accountName, setAccountName] = useState('');
   const [paymentProof, setPaymentProof] = useState(null);
   const [paymentProofName, setPaymentProofName] = useState('');
 
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const [eventDetails, setEventDetails] = useState(null);
+  const [picOptions, setPicOptions] = useState([]);
+  const [positionOptions, setPositionOptions] = useState([]);
+  const bankAccountNumber = 1412314123;
+  const accountName = 'Asosiasi Emiten Indonesia';
 
+  // Function for list
   const handleAddParticipant = () => {
     setParticipants([
       ...participants,
@@ -55,9 +51,49 @@ export default function Page() {
     );
     setParticipants(updatedParticipants);
   };
+  // End of Function for list
 
-  const picOptions = ['John Doe', 'Jane Smith', 'Michael Johnson'];
-  const positionOptions = ['Manager', 'Developer', 'Designer', 'Intern'];
+  const handleGetPicOptions = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/select/my-pic`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setPicOptions(data.data);
+      } else {
+        alert(data.message || 'Failed to fetch data');
+      }
+    } catch (err) {
+      console.error('An error occurred:', err);
+    }
+  }, []);
+
+  const handleGetPicPositionOptions = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/select/pic-position`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setPositionOptions(data.data);
+      } else {
+        alert(data.message || 'Failed to fetch data');
+      }
+    } catch (err) {
+      console.error('An error occurred:', err);
+    }
+  }, []);
 
   const handleGetDetail = useCallback(async () => {
     try {
@@ -71,8 +107,7 @@ export default function Page() {
       );
       const data = await response.json();
       if (response.ok) {
-        setInvoiceDetails(data.data);
-        setCompanyDetails(data.data.company);
+        setEventDetails(data.data.event);
       } else {
         alert(data.message || 'Failed to fetch data');
       }
@@ -82,66 +117,78 @@ export default function Page() {
   }, [slug]);
 
   useEffect(() => {
+    handleGetPicOptions();
+    handleGetPicPositionOptions();
     slug && handleGetDetail();
   }, [slug]);
 
-  const handlePaymentConfirmation = async () => {
-    let formError = {};
-
-    if (confirmedBank === 'BCA') {
-      if (!accountNumber)
-        formError.accountNumber = 'Account number is required';
-      if (!accountName) formError.accountName = 'Account name is required';
-    } else if (confirmedBank === 'Mandiri') {
-      if (!paymentProof) formError.paymentProof = 'Payment proof is required';
-    }
-
-    if (Object.keys(formError).length > 0) {
-      setError(formError);
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('paymentMethod', confirmedBank);
-    formData.append('file', paymentProof);
-    formData.append('accountNumber', accountNumber);
-    formData.append('accountName', accountName);
-
+  const handleJoinEvent = useCallback(async () => {
     try {
+      const formData = new FormData();
+
+      // Add payment details
+      formData.append('paymentMethod', selectedBank);
+      formData.append('accountName', accountName || '');
+      formData.append('accountNumber', bankAccountNumber || '');
+
+      // Add participants data
+      participants.forEach((participant, index) => {
+        if (participant.type === 'PIC') {
+          formData.append(
+            `participants[${index}][companyPic]`,
+            participant.pic
+          );
+        } else if (participant.type === 'Others') {
+          formData.append(`participants[${index}][name]`, participant.name);
+          formData.append(
+            `participants[${index}][position]`,
+            participant.position
+          );
+          formData.append(`participants[${index}][email]`, participant.email);
+          formData.append(
+            `participants[${index}][mobileNumber]`,
+            participant.mobile
+          );
+        }
+      });
+
+      // Add payment proof if available
+      if (paymentProof) {
+        formData.append('file', paymentProof);
+      }
+
+      // Make API call
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/company-invoice/${slug}/payment`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/event/${slug}`,
         {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${Cookies.get('token')}`,
           },
-          body: formData, // Mengirimkan FormData
+          body: formData, // Use FormData directly as the body
         }
       );
 
       const data = await response.json();
-
       if (response.ok) {
-        setConfirmedBank(confirmedBank);
-        router.push('/');
+        alert(data.message || 'Successfully submitted');
+        router.back();
       } else {
-        alert(data.message || 'Failed to confirm payment');
+        alert(data.message || 'Failed to submit');
       }
     } catch (err) {
-      console.error(err);
-      alert('Error confirming payment');
+      console.error('An error occurred:', err);
+      alert('An error occurred during submission.');
     }
-  };
-
-  const formatCurrencyCopy = (value) => {
-    // Format angka tanpa simbol "Rp" dan tanpa pemisah ribuan
-    return new Intl.NumberFormat('id-ID', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    })
-      .format(value)
-      .replace(/[^\d]/g, ''); // Menghapus karakter non-numerik
-  };
+  }, [
+    selectedBank,
+    participants,
+    paymentProof,
+    slug,
+    router,
+    accountName,
+    bankAccountNumber,
+  ]);
 
   const handleCopy = (e) => {
     // Mengambil elemen <span> sebelumnya terkait tombol yang diklik
@@ -176,16 +223,18 @@ export default function Page() {
                 <h5>Total Payment</h5>
                 <span
                   data-value={formatCurrencyCopy(
-                    parseFloat(invoiceDetails?.totalAmount)
+                    parseFloat(eventDetails.price * participants.length || 0)
                   )}
                 >
-                  {formatCurrency(parseFloat(invoiceDetails?.totalAmount))}
+                  {formatCurrency(
+                    parseFloat(eventDetails.price * participants.length || 0)
+                  )}
                 </span>
                 <div className="copy_btn" onClick={handleCopy}></div>
               </div>
               <div className="sip_box">
                 <h5>Bank and Account number</h5>
-                <span data-value={1412314123}>1412314123</span>
+                <span data-value={bankAccountNumber}>{bankAccountNumber}</span>
                 <div className="copy_btn" onClick={handleCopy}></div>
               </div>
               <div className="sip_box">
@@ -195,7 +244,7 @@ export default function Page() {
               </div>
               <div className="sip_box">
                 <h5>Account Name</h5>
-                <span>Asosiasi Emiten Indonesia</span>
+                <span>{accountName}</span>
               </div>
             </div>
             <div className="upload_box">
@@ -224,16 +273,18 @@ export default function Page() {
                 <h5>Total Payment</h5>
                 <span
                   data-value={formatCurrencyCopy(
-                    parseFloat(invoiceDetails?.totalAmount)
+                    parseFloat(eventDetails.price * participants.length || 0)
                   )}
                 >
-                  {formatCurrency(parseFloat(invoiceDetails?.totalAmount))}
+                  {formatCurrency(
+                    parseFloat(eventDetails.price * participants.length || 0)
+                  )}
                 </span>
                 <div className="copy_btn"></div>
               </div>
               <div className="sip_box">
                 <h5>Bank and Account number</h5>
-                <span data-value={1412314123}>1412314123</span>
+                <span data-value={bankAccountNumber}>{bankAccountNumber}</span>
                 <div className="copy_btn"></div>
               </div>
               <div className="sip_box">
@@ -248,7 +299,7 @@ export default function Page() {
               </div>
               <div className="sip_box">
                 <h5>Account Name</h5>
-                <span>Asosiasi Emiten Indonesia</span>
+                <span>{accountName}</span>
               </div>
             </div>
             <div className="upload_box">
@@ -343,8 +394,8 @@ export default function Page() {
                           Select PIC
                         </option>
                         {picOptions.map((pic, idx) => (
-                          <option key={idx} value={pic}>
-                            {pic}
+                          <option key={idx} value={pic.id}>
+                            {pic.name}
                           </option>
                         ))}
                       </select>
@@ -385,8 +436,8 @@ export default function Page() {
                             Select Position
                           </option>
                           {positionOptions.map((position, idx) => (
-                            <option key={idx} value={position}>
-                              {position}
+                            <option key={idx} value={position.id}>
+                              {position.name}
                             </option>
                           ))}
                         </select>
@@ -466,16 +517,17 @@ export default function Page() {
             {!confirmedBank ? (
               <>
                 <h4>Payment form</h4>
-                <div className="section_info">
-                  Seminar penyusunan sustainability report berbasis GRI standard
-                  & IFRS
-                </div>
+                <div className="section_info">{eventDetails?.title}</div>
                 <div className="section_price">
-                  <span style={{color: '#332C2B'}}>4 Participant</span>
+                  <span style={{color: '#332C2B'}}>
+                    {`${participants.length} Participant`}{' '}
+                  </span>
                 </div>
                 <div className="section_price">
                   <strong>
-                    {formatCurrency(parseFloat(invoiceDetails?.totalAmount))}
+                    {formatCurrency(
+                      parseFloat(eventDetails?.price * participants.length || 0)
+                    )}
                   </strong>
                 </div>
                 <div className="bank_payment">
@@ -529,11 +581,6 @@ export default function Page() {
             ) : (
               <>
                 <h4>Waiting for Payment</h4>
-                <h3>{companyDetails?.companyName}</h3>
-                <span className="stock_name">
-                  STOCK CODE:{' '}
-                  <span className="blue_text">{companyDetails?.stockCode}</span>
-                </span>
                 {additionalContent()}
                 <div className="button_wrapper">
                   <button
@@ -542,10 +589,7 @@ export default function Page() {
                   >
                     Back
                   </button>
-                  <button
-                    className="green_btn"
-                    onClick={handlePaymentConfirmation}
-                  >
+                  <button className="green_btn" onClick={handleJoinEvent}>
                     Submit
                   </button>
                 </div>
@@ -554,47 +598,42 @@ export default function Page() {
           </div>
         );
       case 3:
-        return <div className="ep_box">Step 3</div>;
+        return (
+          <div className="ep_box">
+            <div className="ep_box_outer">
+              <p className='title'>Order Success</p>
+              <p className='desc'>
+                your order for <span>{eventDetails?.title}</span> is Success.
+                please wait for admin to confirm your payment
+              </p>
+              <Button
+                type="solid"
+                text="Back to Event"
+                bgColor="#009B4C"
+                color="#fff"
+                padding="8px 36px"
+                borderRadius="8px"
+                width="200px"
+                onClick={() => {
+                  router.push(`/event/${slug}`);
+                }}
+              />
+            </div>
+          </div>
+        );
       default:
         return null;
     }
-  }, [step, participants, picOptions, positionOptions]);
-
-  useEffect(() => {
-    if (!slug) return; // Wait until slug is available
-
-    const fetchInvoiceDetails = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/company-invoice/${slug}`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${Cookies.get('token')}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        if (data.code === 200) {
-          setInvoiceDetails(data.data.invoice); // Store invoice details
-          setCompanyDetails(data.data.company); // Store company details
-        } else {
-          throw new Error(data.message || 'Failed to fetch invoice details');
-        }
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInvoiceDetails();
-  }, [slug]);
+  }, [
+    step,
+    participants,
+    picOptions,
+    positionOptions,
+    eventDetails,
+    selectedBank,
+    additionalContent,
+    slug
+  ]);
 
   return (
     <div className="ep_ctr">

@@ -12,7 +12,7 @@ export default function usePicData() {
         const isProfileCompleted = Cookies.get('is_profile_completed');
 
         if (isProfileCompleted === 'true') {
-            fetchPicData();
+        fetchPicData();
         } else {
             console.log("Profile not completed, redirecting...");
             setLoading(false);
