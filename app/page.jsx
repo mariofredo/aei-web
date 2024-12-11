@@ -20,7 +20,10 @@ import {
   ModalEditPic,
   ModalEditLeader,
   ModalEditProfile,
+<<<<<<< HEAD
+=======
   CoverSlider,
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
 } from '@/components';
 import {useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
@@ -88,7 +91,11 @@ export default function Home() {
   }, [showEditProfilePopup]);
 
   if (loading) {
+<<<<<<< HEAD
+    return <div className='loader center'></div>;
+=======
     return <div className="loader center"></div>;
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
   }
   const handleTabClick = (tab) => {
     setActivityTab(tab); // Mengubah tab aktif berdasarkan klik
@@ -116,8 +123,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="section_profile_right">
-              <TradingViewWidget stockCode={companyData?.stockCode} />
+            <div className='section_profile_right'>
+              {/* <TradingViewWidget stockCode={companyData?.stockCode} /> */}
             </div>
           </>
         );
@@ -125,6 +132,17 @@ export default function Home() {
         return (
           <>
             {companyData?.status === 'data_submitted' ? (
+<<<<<<< HEAD
+              <div className='section_membership_none'>
+                <h3>Complete your registration</h3>
+                <p>Please download and sign the form bellow.</p>
+                <p>
+                  Then <span className='red_text'>upload and send</span> the
+                  signed file to <span className='black_text'>AEI office</span>{' '}
+                  address to complete the registration
+                </p>
+                <Link href='' className='download_pdf_btn'>
+=======
               <div className="section_membership_none">
                 <h3>Complete your registration</h3>
                 <p>Please download and sign the form bellow.</p>
@@ -134,11 +152,16 @@ export default function Home() {
                   address to complete the registration
                 </p>
                 <Link href="" className="download_pdf_btn">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                   <span>{companyData?.companyName} Registration Form.PDF</span>
                 </Link>
               </div>
             ) : companyData?.status === 'in_review' ? (
+<<<<<<< HEAD
+              <div className='section_membership_none in_review'>
+=======
               <div className="section_membership_none in_review">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                 <h3>Waiting for Confirmation</h3>
                 <p>
                   Your registration will be approved after we receive your{' '}
@@ -147,6 +170,19 @@ export default function Home() {
                 </p>
               </div>
             ) : (
+<<<<<<< HEAD
+              <div className='section_membership'>
+                <div className='sm_left'>
+                  <div className='membership_box'>
+                    <h3>Membership</h3>
+                    <div className='mb_ctr'>
+                      <h5>Membership Number</h5>
+                      <span>{companyData?.membershipNumber}</span>
+                    </div>
+                    <div className='mb_ctr'>
+                      <h5>Member Category</h5>
+                      <span className='green_text'>
+=======
               <div className="section_membership">
                 <div className="sm_left">
                   <div className="membership_box">
@@ -158,11 +194,23 @@ export default function Home() {
                     <div className="mb_ctr">
                       <h5>Member Category</h5>
                       <span className="green_text">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                         {companyData?.companyCategoryName}
                       </span>
                     </div>
                   </div>
                   {companyData?.memberStatus === 'inactive' ? (
+<<<<<<< HEAD
+                    <div className='member_status inactive'>
+                      status: <span>Inactive</span>
+                    </div>
+                  ) : companyData?.memberStatus === 'paid' ? (
+                    <div className='member_status paid'>
+                      status: <span>Active</span>
+                    </div>
+                  ) : (
+                    <div className='member_status expired'>
+=======
                     <div className="member_status inactive">
                       status: <span>Inactive</span>
                     </div>
@@ -172,10 +220,30 @@ export default function Home() {
                     </div>
                   ) : (
                     <div className="member_status expired">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                       status: <span>Expired</span>
                     </div>
                   )}
                 </div>
+<<<<<<< HEAD
+                <div className='sm_right'>
+                  <div className='section_payment_home'>
+                    <h3>Payment History</h3>
+                    <div className='sp_wrap'>
+                      {invoices.map((invoice) => (
+                        <div className='sp_box'>
+                          <h5>{invoice.code}</h5>
+                          {invoice.note && (
+                            <span className='info'>{invoice.note}</span>
+                          )}
+                          <span className='date'>{invoice.invoiceDate}</span>
+                          {invoice.status === 'in_review' ? (
+                            <span className='orange_btn'>
+                              waiting confirmation
+                            </span>
+                          ) : invoice.status === 'paid' ? (
+                            <span className='blue_btn'>
+=======
                 <div className="sm_right">
                   <div className="section_payment_home">
                     <h3>Payment History</h3>
@@ -193,12 +261,17 @@ export default function Home() {
                             </span>
                           ) : invoice.status === 'paid' ? (
                             <span className="blue_btn">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                               <span></span>
                             </span>
                           ) : (
                             <Link
                               href={`/payment?invoiceCode=${invoice.id}`}
+<<<<<<< HEAD
+                              className='green_btn'
+=======
                               className="green_btn"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                             >
                               Pay
                             </Link>
@@ -214,10 +287,17 @@ export default function Home() {
         );
       case 'Activity':
         return (
+<<<<<<< HEAD
+          <div className='section_activity'>
+            <div className='sa_top'>
+              <h3>Seminar</h3>
+              <div className='sa_menu'>
+=======
           <div className="section_activity">
             <div className="sa_top">
               <h3>Seminar</h3>
               <div className="sa_menu">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                 <div
                   className={`upcoming_btn ${
                     activityTab === 'upcoming' ? 'active' : ''
@@ -236,13 +316,21 @@ export default function Home() {
                     History
                   </div>
                 ) : (
+<<<<<<< HEAD
+                  <div className='history_btn'>
+=======
                   <div className="history_btn">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                     <span>History</span>
                   </div>
                 )}
               </div>
             </div>
+<<<<<<< HEAD
+            <div className='card_flex'>
+=======
             <div className="card_flex">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
               {activityTab === 'upcoming' && (
                 <CardEvent events={upcomingData} />
               )}
@@ -253,11 +341,19 @@ export default function Home() {
       case 'Leaders and PIC':
         return (
           <>
+<<<<<<< HEAD
+            <div className='section_table_box'>
+              <div className='stb_ctr'>
+                <h3>Board of Executive</h3>
+                <div
+                  className='add_more_btn'
+=======
             <div className="section_table_box">
               <div className="stb_ctr">
                 <h3>Board of Executive</h3>
                 <div
                   className="add_more_btn"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                   onClick={handleAddMoreLeaderClick}
                 >
                   Add More
@@ -276,9 +372,15 @@ export default function Home() {
                         {leaderData.positionName}
                       </td>
                       <td>
+<<<<<<< HEAD
+                        <div className='action_btn'>
+                          <div
+                            className='delete_btn'
+=======
                         <div className="action_btn">
                           <div
                             className="delete_btn"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                             onClick={() =>
                               handleDeleteLeaderClick(leaderData.id)
                             }
@@ -286,7 +388,11 @@ export default function Home() {
                             Delete
                           </div>
                           <div
+<<<<<<< HEAD
+                            className='edit_btn'
+=======
                             className="edit_btn"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                             onClick={() => handleEditLeaderClick(leaderData)}
                           >
                             Edit
@@ -298,8 +404,13 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
+<<<<<<< HEAD
+            <div className='section_table_box'>
+              <div className='stb_ctr'>
+=======
             <div className="section_table_box">
               <div className="stb_ctr">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                 <h3>PIC</h3>
                 <div
                   className={`add_more_btn ${
@@ -331,21 +442,35 @@ export default function Home() {
                         {picData.phone}
                       </td>
                       <td>
+<<<<<<< HEAD
+                        <div className='action_btn'>
+                          <div
+                            className='delete_btn'
+=======
                         <div className="action_btn">
                           <div
                             className="delete_btn"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                             onClick={() => handleDeleteClick(picData.id)}
                           >
                             Delete
                           </div>
                           <div
+<<<<<<< HEAD
+                            className='edit_btn'
+=======
                             className="edit_btn"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                             onClick={() => handleEditClick(picData)}
                           >
                             Edit
                           </div>
                           <div
+<<<<<<< HEAD
+                            className='change_password'
+=======
                             className="change_password"
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
                             onClick={() => {
                               setSelectedId(picData.id); // Set ID saat tombol Change Password diklik
                               setShowPopup(true); // Tampilkan popup
@@ -368,6 +493,11 @@ export default function Home() {
   };
   return (
     <>
+<<<<<<< HEAD
+      <div className='section_homepage'>
+        <CoverImage cover={companyData?.banner || null} />
+        <div className='container'>
+=======
       <div className="section_homepage">
         <CoverSlider
           images={[
@@ -376,6 +506,7 @@ export default function Home() {
           ]}
         />
         <div className="container">
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
           <LeftMenu
             hqAdress={companyData?.headquarterAddress}
             officeAdress={companyData?.managementOfficeAddress}
@@ -435,9 +566,15 @@ export default function Home() {
       {/* {showEditPsrofilePopup && ( */}
       <ModalEditProfile
         data={companyData}
+<<<<<<< HEAD
+        showEditProfilePopup={showEditProfilePopup}
+        setShowEditProfilePopup={setShowEditProfilePopup}
+        setCompanyData={setCompanyData}
+=======
         setCompanyData={setCompanyData}
         showEditProfilePopup={showEditProfilePopup}
         setShowEditProfilePopup={setShowEditProfilePopup}
+>>>>>>> f660d458c9060317992b7643a6b3dc6267ebe50d
       />
       {/* )} */}
     </>
