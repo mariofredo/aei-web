@@ -89,6 +89,7 @@ function ResetPassword() {
                                     placeholder="Enter your new password"
                                 />
                                 <button
+                                    className={showPassword ? 'active' : ''}
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
@@ -100,6 +101,7 @@ function ResetPassword() {
                             <span>Confirm Password</span>
                             <div className="password_field">
                                 <input
+                                    className={showPassword ? 'active' : ''}
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
