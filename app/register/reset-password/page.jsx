@@ -109,7 +109,10 @@ function ResetPassword() {
                                 <button
                                     className={showConfirmPassword ? 'active' : ''}
                                     type="button"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    onClick={() => {
+                                        console.log('Tombol diklik');
+                                        setShowConfirmPassword(!showConfirmPassword);
+                                    }}
                                 >
                                     {showConfirmPassword ? 'Hide' : 'Show'}
                                 </button>
